@@ -1,0 +1,67 @@
+# Project
+Job Name
+Client - needs DB
+Poject number
+Property Type - needs DB
+Property Owner Name
+Property Address - needs DB
+Mailing address for wet stamps
+Number of wet stamps
+
+Job Related Project
+
+# Job
+
+Service Order URL
+Job Folder
+Job Request Number
+Job Number
+Service Order Form - clarify
+In Review
+Job Status - needs DB
+Estimated Days to Complete
+Estimated Days to Complete Override
+Date Recevied Formula
+Date Due
+Date Completed/Cancellled - clarify
+Date Sent to Client
+Client Contact
+Client Contact E-Mail
+Deliverables Email - clarify
+Additional Information From Client
+Add Note - (Job Note, Date Created, Record Owner)
+
+# RFI
+New Message - clarify
+RFI Messages
+
+# Tracking Numbers
+Tracking #
+Courier
+Record Owner
+Date Created
+Last Modified By
+Date Modified
+
+# Task
+Checkboxes
+
+Task Records
+Service
+Assigned To
+Other Service Description
+Is New Task Override
+Task price Override
+Task Price Total
+Task Expense Override
+Task Expens Total
+Design Revision Scope
+New Storage Design
+Notes
+Task Status
+Date Completed/Cancellled
+
+# Price
+Task Price Total
+Commerical Job Price
+Total
