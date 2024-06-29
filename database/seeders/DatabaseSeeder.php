@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Client;
 use App\Models\GlobalParameter;
 use App\Models\User;
+use Database\Factories\ClientFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +22,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        Client::factory(20)->create();
 
         GlobalParameter::query()->insert([
             ['param_name' => 'company-logo', 'param_value' => null],

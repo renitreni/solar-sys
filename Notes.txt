@@ -1,12 +1,14 @@
+## Project Management
+
 # Project
 Job Name
-Client - needs DB
+Client - needs DB *
 Poject number
 Property Type - needs DB
 Property Owner Name
 Property Address - needs DB
 Mailing address for wet stamps
-Number of wet stamps
+Number of wet stamps / shpping no
 
 Job Related Project
 
@@ -16,22 +18,22 @@ Service Order URL
 Job Folder
 Job Request Number
 Job Number
-Service Order Form - clarify
+Service Order Form
 In Review
 Job Status - needs DB
 Estimated Days to Complete
 Estimated Days to Complete Override
 Date Recevied Formula
 Date Due
-Date Completed/Cancellled - clarify
+Date Completed/Cancelled - automated from last action task
 Date Sent to Client
 Client Contact
 Client Contact E-Mail
-Deliverables Email - clarify
+Deliverables Email - Client contact
 Additional Information From Client
 Add Note - (Job Note, Date Created, Record Owner)
 
-# RFI
+# RFI Request for information
 New Message - clarify
 RFI Messages
 
@@ -65,3 +67,21 @@ Date Completed/Cancellled
 Task Price Total
 Commerical Job Price
 Total
+
+## Project Intake Portal
+
+Organization Name
+Client Contact - needs DB
+User Name
+E-Mail
+Company Account Name
+Existing Project Address
+Checkbox Project Not Found/ This is New Project
+Job #
+
+# New Project
+Service - needs DB
+Additional Information
+
+# Documents
+File attachments 5 files
