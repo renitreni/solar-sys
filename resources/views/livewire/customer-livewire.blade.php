@@ -19,8 +19,13 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-
-                    <h5 class="modal-title fw-bold" id="userFormModalLabel">Add User Form</h5>
+                    <h5 class="modal-title fw-bold" id="clientFormModalLabel">
+                        @if ($this->clientId)
+                            Edit Client Form
+                        @else
+                            Add Client Form
+                        @endif
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -58,10 +63,19 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-primary">Save</button>
+
+                    @if ($this->clientId)
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-danger" wire:click='destroy()'>Delete</button>
+                        <button type="button" class="btn btn-primary" wire:click='update()'>Update</button>
+                    @else
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    @endif
                 </div>
             </div>
         </div>

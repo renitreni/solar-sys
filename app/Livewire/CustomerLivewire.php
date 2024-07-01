@@ -12,6 +12,7 @@ class CustomerLivewire extends Component
     public $email;
     public $address;
     public $contact_no;
+    public $clientId;
 
     public function render()
     {
@@ -26,5 +27,24 @@ class CustomerLivewire extends Component
         $this->email = $client->email;
         $this->address = $client->address;
         $this->contact_no = $client->contact_no;
+        $this->clientId = $client->id;
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'email' => 'required',
+            'name' => 'required'
+        ]);
+
+        $client = Client::find($this->clientId);
+        $client->name = $this->name;
+        $client->email = $this->email;
+        $client->address = $this->address;
+        $client->contact_no = $this->contact_no;
+        $client->save();
+
+        $this->js('$("#clientFormModal").modal("hide")');
+        $this->dispatch('pg:eventRefresh-ClientTable');
     }
 }
