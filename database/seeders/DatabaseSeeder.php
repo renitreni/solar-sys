@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Client;
 use App\Models\GlobalParameter;
 use App\Models\User;
-use Database\Factories\ClientFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

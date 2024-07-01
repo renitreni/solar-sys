@@ -36,6 +36,11 @@
                     <h4 class="text-section">Components</h4>
                 </li>
 
+                <x-sidebar-link-component routeName="customers">
+                    <i class="fas fa-building"></i>
+                    <p>Customer</p>
+                </x-sidebar-link-component>
+
                 <x-sidebar-link-collapsable-component prefix="/users" :sub="[
                     'All List' => 'user',
                 ]">

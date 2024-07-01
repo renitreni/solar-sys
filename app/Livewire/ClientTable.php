@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
@@ -13,10 +13,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class UserTable extends PowerGridComponent
+final class ClientTable extends PowerGridComponent
 {
-    public string $tableName = 'UserTable';
-
     use WithExport;
 
     public function setUp(): array
@@ -33,7 +31,7 @@ final class UserTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return User::query();
+        return Client::query();
     }
 
     public function relationSearch(): array
@@ -47,6 +45,8 @@ final class UserTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('email')
+            ->add('address')
+            ->add('contact_no')
             ->add('created_at');
     }
 
@@ -62,23 +62,39 @@ final class UserTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
+            Column::make('Address', 'address')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Contact no', 'contact_no')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Created at', 'created_at_formatted', 'created_at')
+                ->sortable(),
+
+            Column::make('Created at', 'created_at')
+                ->sortable()
+                ->searchable(),
+
             Column::action('Action'),
         ];
     }
 
     public function filters(): array
     {
-        return [];
+        return [
+        ];
     }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->js('$("#userFormModal").modal("show")');
-        $this->dispatch('edit-user', ['rowId' => $rowId]);
+        $this->dispatch('client-edit', $rowId);
+        $this->js('$("#clientFormModal").modal("show")');
     }
 
-    public function actions(User $row): array
+    public function actions(Client $row): array
     {
         return [
             Button::add('edit')

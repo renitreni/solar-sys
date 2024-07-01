@@ -4,6 +4,7 @@ use App\Http\Controllers\Actions\GetCompanyLogo;
 use App\Http\Controllers\Actions\GetImage;
 use App\Http\Controllers\LogoutController;
 use App\Livewire\CompanyLogoLivewire;
+use App\Livewire\CustomerLivewire;
 use App\Livewire\DashboardLivewire;
 use App\Livewire\LoginLivewire;
 use App\Livewire\UserLivewire;
@@ -27,5 +28,9 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     Route::prefix('settings')->group(function () {
         Route::get('/company-logo', CompanyLogoLivewire::class)->name('company-logo');
+    });
+
+    Route::prefix('customers')->group(function () {
+        Route::get('/', CustomerLivewire::class)->name('customers');
     });
 });

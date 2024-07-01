@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\GlobalParameter;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class GetCompanyLogo extends Controller
