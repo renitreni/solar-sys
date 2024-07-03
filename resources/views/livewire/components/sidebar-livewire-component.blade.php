@@ -36,10 +36,17 @@
                     <h4 class="text-section">Components</h4>
                 </li>
 
-                <x-sidebar-link-component routeName="customers">
-                    <i class="fas fa-building"></i>
-                    <p>Customer</p>
-                </x-sidebar-link-component>
+                <x-sidebar-link-collapsable-component prefix="/reference" :sub="[
+                   'Customer' => 'customers',
+                   'Property Type' => 'property-type',
+                   'Property Address' => 'property-address',
+                   'Property Owner' => 'property-owner',
+                   'Service' => 'service',
+                   'Job Status' => 'job-status',
+                ]">
+                    <i class="fas fa-folder"></i>
+                    <p>References</p>
+                </x-sidebar-link-collapsable-component>
 
                 <x-sidebar-link-collapsable-component prefix="/users" :sub="[
                     'All List' => 'user',
@@ -47,7 +54,6 @@
                     <i class="fas fa-user"></i>
                     <p>Users</p>
                 </x-sidebar-link-collapsable-component>
-
 
                 <x-sidebar-link-collapsable-component prefix="/settings" :sub="[
                     'Company Logo' => 'company-logo',

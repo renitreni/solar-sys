@@ -4,6 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\GlobalParameter;
+use App\Models\JobStatus;
+use App\Models\PropertyAddress;
+use App\Models\PropertyOwner;
+use App\Models\PropertyType;
+use App\Models\Service;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,6 +28,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Client::factory(20)->create();
+        JobStatus::factory(20)->create();
+        PropertyAddress::factory(20)->create();
+        PropertyOwner::factory(20)->create();
+        PropertyType::factory(20)->create();
+        Service::factory(20)->create();
 
         GlobalParameter::query()->insert([
             ['param_name' => 'company-logo', 'param_value' => null],
