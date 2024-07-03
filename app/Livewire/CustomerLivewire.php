@@ -47,4 +47,12 @@ class CustomerLivewire extends Component
         $this->js('$("#clientFormModal").modal("hide")');
         $this->dispatch('pg:eventRefresh-ClientTable');
     }
+
+    public function destroy()
+    {
+        Client::find($this->clientId)->delete();
+
+        $this->js('$("#clientFormModal").modal("hide")');
+        $this->dispatch('pg:eventRefresh-ClientTable');
+    }
 }
