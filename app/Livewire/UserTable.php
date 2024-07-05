@@ -78,14 +78,38 @@ final class UserTable extends PowerGridComponent
         $this->dispatch('edit-user', ['rowId' => $rowId]);
     }
 
+    #[\Livewire\Attributes\On('delete')]
+    public function delete($rowId): void
+    {
+        $this->js('$("#userDeleteModal").modal("show")');
+        $this->dispatch('edit-user', ['rowId' => $rowId]);
+    }
+
+    #[\Livewire\Attributes\On('change-pass')]
+    public function changePass($rowId): void
+    {
+        $this->js('$("#userChangePassModal").modal("show")');
+        $this->dispatch('edit-user', ['rowId' => $rowId]);
+    }
+
     public function actions(User $row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit')
+                ->slot('<i class="fas fa-edit"></i>')
                 ->id()
                 ->class('btn btn-primary btn-sm my-1')
                 ->dispatch('edit', ['rowId' => $row->id]),
+            Button::add('changepass')
+                ->slot('<i class="fas fa-key"></i>')
+                ->id()
+                ->class('btn btn-warning btn-sm my-1')
+                ->dispatch('change-pass', ['rowId' => $row->id]),
+            Button::add('delete')
+                ->slot('<i class="fas fa-trash-alt"></i>')
+                ->id()
+                ->class('btn btn-danger btn-sm my-1')
+                ->dispatch('delete', ['rowId' => $row->id]),
         ];
     }
 

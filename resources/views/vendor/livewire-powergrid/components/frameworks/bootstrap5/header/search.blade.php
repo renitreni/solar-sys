@@ -19,6 +19,8 @@
                         ></path>
                     </svg>
                 </span>
+                {{-- Hidden for Chrome autofill --}}
+                <input type="text" id="username" name="username" style="position: fixed; font-size: 0px; width: 0px; height: 0px; top: -500px; left: -500px;" />
                 <input
                     wire:model.live.debounce.600ms="search"
                     type="text"
