@@ -8,7 +8,7 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <livewire:client-table />
+                <livewire:table.client-table />
             </div>
         </div>
     </div>

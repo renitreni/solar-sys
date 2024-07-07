@@ -6,11 +6,11 @@ use App\Http\Controllers\LogoutController;
 use App\Livewire\CompanyLogoLivewire;
 use App\Livewire\CustomerLivewire;
 use App\Livewire\DashboardLivewire;
-use App\Livewire\JobStatusLivewwire;
+use App\Livewire\JobStatusLivewire;
 use App\Livewire\LoginLivewire;
-use App\Livewire\PropertyAddressLivewwire;
-use App\Livewire\PropertyOwnerLivewwire;
-use App\Livewire\PropertyTypeLivewwire;
+use App\Livewire\PropertyAddressLivewire;
+use App\Livewire\PropertyOwnerLivewire;
+use App\Livewire\PropertyTypeLivewire;
 use App\Livewire\ServiceLivewire;
 use App\Livewire\UserLivewire;
 use App\Models\PropertyAddress;
@@ -38,10 +38,10 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     Route::prefix('reference')->group(function () {
         Route::get('/customers', CustomerLivewire::class)->name('customers');
-        Route::get('/property-type', PropertyTypeLivewwire::class)->name('property-type');
-        Route::get('/property-address', PropertyAddressLivewwire::class)->name('property-address');
-        Route::get('/property-owner', PropertyOwnerLivewwire::class)->name('property-owner');
+        Route::get('/property-type', PropertyTypeLivewire::class)->name('property-type');
+        Route::get('/property-address', PropertyAddressLivewire::class)->name('property-address');
+        Route::get('/property-owner', PropertyOwnerLivewire::class)->name('property-owner');
         Route::get('/service', ServiceLivewire::class)->name('service');
-        Route::get('/job-status', JobStatusLivewwire::class)->name('job-status');
+        Route::get('/job-status', JobStatusLivewire::class)->name('job-status');
     });
 });

@@ -15,7 +15,7 @@
                         </button>
                     </div>
                     <div>
-                        <livewire:user-table />
+                        <livewire:table.user-table />
                     </div>
                 </div>
             </div>

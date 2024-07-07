@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class JobStatusLivewwire extends Component
+class PropertyTypeLivewire extends Component
 {
     public function render()
     {
-        return view('livewire.job-status-livewwire');
+        return view('livewire.property-type-livewire');
     }
 }

@@ -1,29 +1,33 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Table;
 
-use App\Models\Client;
+use App\Models\PropertyType;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
+use PowerComponents\LivewirePowerGrid\Exportable;
+use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class ClientTable extends PowerGridComponent
+final class PropertyTypeTable extends PowerGridComponent
 {
-    public string $tableName = 'ClientTable';
-
     use WithExport;
 
     public function setUp(): array
     {
-        // $this->showCheckBox();
+        $this->showCheckBox();
 
         return [
+            Exportable::make('export')
+                ->striped()
+                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -33,7 +37,7 @@ final class ClientTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Client::query();
+        return PropertyType::query();
     }
 
     public function relationSearch(): array
@@ -45,10 +49,6 @@ final class ClientTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('name')
-            ->add('email')
-            ->add('address')
-            ->add('contact_no')
             ->add('created_at');
     }
 
@@ -56,22 +56,6 @@ final class ClientTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Name', 'name')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Email', 'email')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Address', 'address')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Contact no', 'contact_no')
-                ->sortable()
-                ->searchable(),
-
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->sortable(),
 
@@ -79,7 +63,7 @@ final class ClientTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::action('Action'),
+            Column::action('Action')
         ];
     }
 
@@ -92,18 +76,17 @@ final class ClientTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->dispatch('client-edit', $rowId);
-        $this->js('$("#clientFormModal").modal("show")');
+        $this->js('alert('.$rowId.')');
     }
 
-    public function actions(Client $row): array
+    public function actions(PropertyType $row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit')
+                ->slot('Edit: '.$row->id)
                 ->id()
-                ->class('btn btn-primary btn-sm my-1')
-                ->dispatch('edit', ['rowId' => $row->id]),
+                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
+                ->dispatch('edit', ['rowId' => $row->id])
         ];
     }
 
