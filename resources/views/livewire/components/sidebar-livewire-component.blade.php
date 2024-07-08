@@ -37,7 +37,7 @@
                 </li>
 
                 <x-sidebar-link-collapsable-component prefix="/reference" :sub="[
-                   'Customer' => 'customers',
+                   'Clients' => 'clients',
                    'Property Type' => 'property-type',
                    'Property Address' => 'property-address',
                    'Property Owner' => 'property-owner',

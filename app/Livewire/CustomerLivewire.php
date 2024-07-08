@@ -34,6 +34,35 @@ class CustomerLivewire extends Component
         $this->clientId = $client->id;
     }
 
+    #[On('client-add')]
+    public function clearFields()
+    {
+        $this->name = null;
+        $this->email = null;
+        $this->address = null;
+        $this->contact_no = null;
+        $this->clientId = null;
+        $this->js('$("#clientFormModal").modal("show")');
+    }
+
+    public function store()
+    {
+        $this->validate([
+            'email' => ['required', 'unique:clients,email'],
+            'name' => 'required',
+        ]);
+
+        $client = new Client;
+        $client->name = $this->name;
+        $client->email = $this->email;
+        $client->address = $this->address;
+        $client->contact_no = $this->contact_no;
+        $client->save();
+
+        $this->js('$("#clientFormModal").modal("hide")');
+        $this->dispatch('pg:eventRefresh-ClientTable');
+    }
+
     public function update()
     {
         $this->validate([

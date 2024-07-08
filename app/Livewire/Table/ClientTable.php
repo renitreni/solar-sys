@@ -31,6 +31,16 @@ final class ClientTable extends PowerGridComponent
         ];
     }
 
+    public function header(): array
+    {
+        return [
+            Button::add('add-new')
+                ->slot('<i class="fas fa-plus"></i> Add New')
+                ->class('btn btn-success')
+                ->dispatch('client-add', []),
+        ];
+    }
+ 
     public function datasource(): Builder
     {
         return Client::query();
@@ -55,7 +65,12 @@ final class ClientTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')->hidden(),
+                
+            Column::make('Created at', 'created_at')
+                ->sortable()
+                ->searchable(),
+                
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
@@ -69,13 +84,6 @@ final class ClientTable extends PowerGridComponent
                 ->searchable(),
 
             Column::make('Contact no', 'contact_no')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
-
-            Column::make('Created at', 'created_at')
                 ->sortable()
                 ->searchable(),
 
