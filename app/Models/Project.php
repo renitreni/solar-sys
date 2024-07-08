@@ -11,9 +11,9 @@ class Project extends Model
 
     protected $fillable = [
         // ProjectID INT PRIMARY KEY AUTO_INCREMENT,
-       'job_name', // JobName VARCHAR(255),
+        'job_name', // JobName VARCHAR(255),
         // ClientID INT,
-       'project_number', // ProjectNumber VARCHAR(255),
+        'project_number', // ProjectNumber VARCHAR(255),
         // PropertyTypeID INT,
         // PropertyOwnerName VARCHAR(255),
         // PropertyAddressID INT,

@@ -17,7 +17,7 @@ class PropertyOwnerFactory extends Factory
     public function definition(): array
     {
         return [
-            'property_owner_name' => fake()->name()
+            'property_owner_name' => fake()->name(),
         ];
     }
 }

@@ -17,7 +17,7 @@ class PropertyAddressFactory extends Factory
     public function definition(): array
     {
         return [
-            'address' => fake()->address()
+            'address' => fake()->address(),
         ];
     }
 }

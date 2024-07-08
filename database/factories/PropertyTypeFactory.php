@@ -17,7 +17,7 @@ class PropertyTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'property_type_name' => fake()->word()
+            'property_type_name' => fake()->word(),
         ];
     }
 }

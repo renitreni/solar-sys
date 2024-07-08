@@ -13,7 +13,6 @@ use App\Livewire\PropertyOwnerLivewire;
 use App\Livewire\PropertyTypeLivewire;
 use App\Livewire\ServiceLivewire;
 use App\Livewire\UserLivewire;
-use App\Models\PropertyAddress;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {

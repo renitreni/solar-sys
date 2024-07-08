@@ -12,7 +12,7 @@ class Document extends Model
     public $fillable = [
         'path',
         'type',
-        'size'
+        'size',
     ];
 
     public function commentable()

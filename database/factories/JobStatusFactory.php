@@ -17,7 +17,7 @@ class JobStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            'job_status' => fake()->name()
+            'job_status' => fake()->name(),
         ];
     }
 }

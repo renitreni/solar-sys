@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire\Table;
 
 use App\Models\User;

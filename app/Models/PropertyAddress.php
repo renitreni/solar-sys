@@ -11,6 +11,6 @@ class PropertyAddress extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'address'
+        'address',
     ];
 }

@@ -10,6 +10,6 @@ class PropertyType extends Model
     use HasFactory;
 
     protected $fillable = [
-        'propert_type_name'
+        'propert_type_name',
     ];
 }

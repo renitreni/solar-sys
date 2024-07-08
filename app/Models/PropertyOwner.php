@@ -11,6 +11,6 @@ class PropertyOwner extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'property_owner_name'
+        'property_owner_name',
     ];
 }

@@ -9,9 +9,13 @@ use Livewire\Component;
 class CustomerLivewire extends Component
 {
     public $name;
+
     public $email;
+
     public $address;
+
     public $contact_no;
+
     public $clientId;
 
     public function render()
@@ -34,7 +38,7 @@ class CustomerLivewire extends Component
     {
         $this->validate([
             'email' => 'required',
-            'name' => 'required'
+            'name' => 'required',
         ]);
 
         $client = Client::find($this->clientId);
