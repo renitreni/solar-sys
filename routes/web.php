@@ -8,9 +8,6 @@ use App\Livewire\CustomerLivewire;
 use App\Livewire\DashboardLivewire;
 use App\Livewire\JobStatusLivewire;
 use App\Livewire\LoginLivewire;
-use App\Livewire\PropertyAddressLivewire;
-use App\Livewire\PropertyOwnerLivewire;
-use App\Livewire\PropertyTypeLivewire;
 use App\Livewire\ServiceLivewire;
 use App\Livewire\UserLivewire;
 use Illuminate\Support\Facades\Route;
@@ -37,9 +34,6 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     Route::prefix('reference')->group(function () {
         Route::get('/clients', CustomerLivewire::class)->name('clients');
-        Route::get('/property-type', PropertyTypeLivewire::class)->name('property-type');
-        Route::get('/property-address', PropertyAddressLivewire::class)->name('property-address');
-        Route::get('/property-owner', PropertyOwnerLivewire::class)->name('property-owner');
         Route::get('/service', ServiceLivewire::class)->name('service');
         Route::get('/job-status', JobStatusLivewire::class)->name('job-status');
     });

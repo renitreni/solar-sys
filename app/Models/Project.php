@@ -4,21 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         // ProjectID INT PRIMARY KEY AUTO_INCREMENT,
-        'job_name', // JobName VARCHAR(255),
-        // ClientID INT,
-        'project_number', // ProjectNumber VARCHAR(255),
-        // PropertyTypeID INT,
-        // PropertyOwnerName VARCHAR(255),
-        // PropertyAddressID INT,
-        // MailingAddress VARCHAR(255),
-        // NumberOfWetStamps INT,
-        // ShippingNumber VARCHAR(255)
+        // PROJECT SECTION
+        'client',
+        'project_number', // unique
+        'property_type',
+        'property_owner_name',
+        'property_address',
+        'property_state',
+        'property_city',
+        'property_area_code',
+        'wet_stamp_mailing_address',
+        'wet_stamp_count',
+        'shipping_number',
+        'priority_level',
+        // TASK SECTION
+        'task_price_total',
+        'commercial_job_price',
+        'total',
+        // RFI
+        'rfi_messages',
     ];
+
+    public function task()
+    {
+        return $this->hasOne(Task::class);
+    }
+
+    public function job()
+    {
+        return $this->hasOne(Job::class);
+    }
 }

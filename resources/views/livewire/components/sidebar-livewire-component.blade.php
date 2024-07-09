@@ -38,10 +38,7 @@
 
                 <x-sidebar-link-collapsable-component prefix="/reference" :sub="[
                    'Clients' => 'clients',
-                   'Property Type' => 'property-type',
-                   'Property Address' => 'property-address',
-                   'Property Owner' => 'property-owner',
-                   'Service' => 'service',
+                   'Services' => 'service',
                    'Job Status' => 'job-status',
                 ]">
                     <i class="fas fa-folder"></i>
