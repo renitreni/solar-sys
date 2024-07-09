@@ -61,15 +61,13 @@ final class ServiceTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Service name', 'service_name')
-                ->sortable()
-                ->searchable(),
-
+            Column::make('Id', 'id')->hidden(),
             Column::make('Created at', 'created_at')
                 ->sortable()
                 ->searchable(),
-
+            Column::make('Service name', 'service_name')
+                ->sortable()
+                ->searchable(),
             Column::action('Action'),
         ];
     }

@@ -11,6 +11,6 @@ class JobStatus extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'job_status',
+        'job_status_name',
     ];
 }

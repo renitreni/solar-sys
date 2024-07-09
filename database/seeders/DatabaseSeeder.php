@@ -29,9 +29,6 @@ class DatabaseSeeder extends Seeder
 
         Client::factory(20)->create();
         JobStatus::factory(20)->create();
-        PropertyAddress::factory(20)->create();
-        PropertyOwner::factory(20)->create();
-        PropertyType::factory(20)->create();
         Service::factory(20)->create();
 
         GlobalParameter::query()->insert([
