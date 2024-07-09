@@ -16,16 +16,13 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class ServiceTable extends PowerGridComponent
 {
-    use WithExport;
+    public string $tableName = 'ServiceTable';
 
     public function setUp(): array
     {
-        $this->showCheckBox();
+       // $this->showCheckBox();
 
         return [
-            Exportable::make('export')
-                ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -36,6 +33,16 @@ final class ServiceTable extends PowerGridComponent
     public function datasource(): Builder
     {
         return Service::query();
+    }
+
+    public function header(): array
+    {
+        return [
+            Button::add('add-new')
+                ->slot('<i class="fas fa-plus"></i> Add New')
+                ->class('btn btn-success')
+                ->dispatch('service-add', []),
+        ];
     }
 
     public function relationSearch(): array
@@ -59,9 +66,6 @@ final class ServiceTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
-
             Column::make('Created at', 'created_at')
                 ->sortable()
                 ->searchable(),
@@ -76,20 +80,14 @@ final class ServiceTable extends PowerGridComponent
         ];
     }
 
-    #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
-    {
-        $this->js('alert('.$rowId.')');
-    }
-
     public function actions(Service $row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit: '.$row->id)
+                ->slot('Edit')
                 ->id()
-                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-                ->dispatch('edit', ['rowId' => $row->id]),
+                ->class('btn btn-sm btn-primary m-1')
+                ->dispatch('edit-service', ['rowId' => $row->id]),
         ];
     }
 
