@@ -39,7 +39,7 @@ class ServiceLivewire extends Component
     public function update()
     {
         $this->validate([
-            'serviceName' => ['required', 'max:100']
+            'serviceName' => ['required', 'max:100'],
         ]);
 
         $service = Service::find($this->serviceId);
@@ -62,7 +62,7 @@ class ServiceLivewire extends Component
     public function store()
     {
         $this->validate([
-            'serviceName' => ['required', 'max:100']
+            'serviceName' => ['required', 'max:100'],
         ]);
 
         $service = new Service();

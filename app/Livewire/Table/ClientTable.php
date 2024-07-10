@@ -40,7 +40,7 @@ final class ClientTable extends PowerGridComponent
                 ->dispatch('client-add', []),
         ];
     }
- 
+
     public function datasource(): Builder
     {
         return Client::query();
@@ -66,11 +66,11 @@ final class ClientTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id')->hidden(),
-                
+
             Column::make('Created at', 'created_at')
                 ->sortable()
                 ->searchable(),
-                
+
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),

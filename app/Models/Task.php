@@ -26,6 +26,6 @@ class Task extends Model
         'notes',
         'task_status',
         'date_completed',
-        'date_cancelled'
+        'date_cancelled',
     ];
 }

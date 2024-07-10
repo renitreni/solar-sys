@@ -39,7 +39,7 @@ class JobStatusLivewire extends Component
     public function update()
     {
         $this->validate([
-            'jobStatusName' => ['required', 'max:100']
+            'jobStatusName' => ['required', 'max:100'],
         ]);
 
         $jobStatus = JobStatus::find($this->jobStatusId);
@@ -53,7 +53,7 @@ class JobStatusLivewire extends Component
     public function store()
     {
         $this->validate([
-            'jobStatusName' => ['required', 'max:100']
+            'jobStatusName' => ['required', 'max:100'],
         ]);
 
         $jobStatus = new JobStatus();
@@ -66,7 +66,7 @@ class JobStatusLivewire extends Component
 
     public function destroy()
     {
-        $jobStatus = JobStatus::find($this->jobStatusId)->delete();
+        JobStatus::find($this->jobStatusId)->delete();
 
         $this->js("$('#jobStatusFormModal').modal('hide')");
         $this->dispatch('pg:eventRefresh-JobStatusTable');

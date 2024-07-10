@@ -6,13 +6,11 @@ use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
-use PowerComponents\LivewirePowerGrid\Exportable;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class ServiceTable extends PowerGridComponent
 {
@@ -20,7 +18,7 @@ final class ServiceTable extends PowerGridComponent
 
     public function setUp(): array
     {
-       // $this->showCheckBox();
+        // $this->showCheckBox();
 
         return [
             Header::make()->showSearchInput(),
