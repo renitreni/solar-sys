@@ -7,10 +7,10 @@
                     height="20">
             </a>
             <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
+                <button class="btn btn-sm btn-toggle toggle-sidebar">
                     <i class="gg-menu-right"></i>
                 </button>
-                <button class="btn btn-toggle sidenav-toggler">
+                <button class="btn btn-sm btn-toggle sidenav-toggler">
                     <i class="gg-menu-left"></i>
                 </button>
             </div>
@@ -58,7 +58,7 @@
                                         <h4>{{ auth()->user()->name }}</h4>
                                         <p class="text-muted">{{ auth()->user()->email }}</p>
                                             {{-- <a href="profile.html"
-                                            class="btn btn-xs btn-secondary btn-sm">View Profile</a> --}}
+                                            class="btn btn-sm btn-xs btn-secondary btn-sm">View Profile</a> --}}
                                     </div>
                                 </div>
                             </li>

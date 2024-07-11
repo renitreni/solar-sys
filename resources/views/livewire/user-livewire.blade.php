@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="d-flex flex-column">
                     <div>
-                        <button type="button" class="btn btn-sm btn-success" wire:click='addNew'>
+                        <button type="button" class="btn btn-sm btn-sm btn-success" wire:click='addNew'>
                             <i class="fas fa-plus"></i> Add New
                         </button>
                     </div>
@@ -73,17 +73,17 @@
                 </div>
                 @if ($this->userId)
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="button" class="btn btn-primary" wire:click="updateUser">Update</button>
+                        <button type="button" class="btn btn-sm btn-primary" wire:click="updateUser">Update</button>
                     </div>
                 @else
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="button" class="btn btn-primary" wire:click='store'>Save</button>
+                        <button type="button" class="btn btn-sm btn-primary" wire:click='store'>Save</button>
                     </div>
                 @endif
             </div>
@@ -109,10 +109,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-danger" wire:click="deleteUser">Yes, Delete</button>
+                    <button type="button" class="btn btn-sm btn-danger" wire:click="deleteUser">Yes, Delete</button>
                 </div>
             </div>
         </div>
@@ -148,10 +148,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-warning" wire:click='changePassword'>Confirm</button>
+                    <button type="button" class="btn btn-sm btn-warning" wire:click='changePassword'>Confirm</button>
                 </div>
             </div>
         </div>

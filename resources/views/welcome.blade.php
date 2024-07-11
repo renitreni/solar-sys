@@ -46,10 +46,10 @@
                             class="navbar-brand" height="20">
                     </a>
                     <div class="nav-toggle">
-                        <button class="btn btn-toggle toggle-sidebar">
+                        <button class="btn btn-sm btn-toggle toggle-sidebar">
                             <i class="gg-menu-right"></i>
                         </button>
-                        <button class="btn btn-toggle sidenav-toggler">
+                        <button class="btn btn-sm btn-toggle sidenav-toggler">
                             <i class="gg-menu-left"></i>
                         </button>
                     </div>
@@ -322,10 +322,10 @@
                                 class="navbar-brand" height="20">
                         </a>
                         <div class="nav-toggle">
-                            <button class="btn btn-toggle toggle-sidebar">
+                            <button class="btn btn-sm btn-toggle toggle-sidebar">
                                 <i class="gg-menu-right"></i>
                             </button>
-                            <button class="btn btn-toggle sidenav-toggler">
+                            <button class="btn btn-sm btn-toggle sidenav-toggler">
                                 <i class="gg-menu-left"></i>
                             </button>
                         </div>
@@ -343,7 +343,7 @@
                             class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <button type="submit" class="btn btn-search pe-1">
+                                    <button type="submit" class="btn btn-sm btn-search pe-1">
                                         <i class="fa fa-search search-icon"></i>
                                     </button>
                                 </div>
@@ -592,7 +592,7 @@
                                                 <div class="u-text">
                                                     <h4>Hizrian</h4>
                                                     <p class="text-muted">hello@example.com</p><a href="profile.html"
-                                                        class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                                        class="btn btn-sm btn-xs btn-secondary btn-sm">View Profile</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -623,8 +623,8 @@
                             <h6 class="op-7 mb-2">Overview</h6>
                         </div>
                         <div class="ms-md-auto py-2 py-md-0">
-                            <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-                            <a href="#" class="btn btn-primary btn-round">Add Customer</a>
+                            <a href="#" class="btn btn-sm btn-label-info btn-round me-2">Manage</a>
+                            <a href="#" class="btn btn-sm btn-primary btn-round">Add Customer</a>
                         </div>
                     </div>
                     <div class="row">

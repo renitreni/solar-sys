@@ -13,7 +13,7 @@ class Project extends Model
     protected $fillable = [
         // ProjectID INT PRIMARY KEY AUTO_INCREMENT,
         // PROJECT SECTION
-        'client',
+        'client_id',
         'project_number', // unique
         'property_type',
         'property_owner_name',
@@ -33,13 +33,13 @@ class Project extends Model
         'rfi_messages',
     ];
 
-    public function task()
+    public function client()
     {
-        return $this->hasOne(Task::class);
+        return $this->belongsTo(Client::class);
     }
 
-    public function job()
+    public function jobs()
     {
-        return $this->hasOne(Job::class);
+        return $this->hasMany(ProjectJob::class);
     }
 }

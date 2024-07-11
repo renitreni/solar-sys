@@ -21,7 +21,7 @@
                                 <span class="error">{{ $message }}</span>
                             @enderror
 
-                            <button class="btn btn-sm btn-info" type="submit">Save photo</button>
+                            <button class="btn btn-sm btn-sm btn-info" type="submit">Save photo</button>
                         </form>
                     </div>
 
@@ -31,7 +31,7 @@
                             @if (config('app.company-logo') == $photoPath)
                                 <label class="text-center mt-2 fs-5">This is just a placeholder.</label>
                             @else
-                                <button class="btn btn-danger mt-3" type="button" wire:click="removeLogo">Delete This
+                                <button class="btn btn-sm btn-danger mt-3" type="button" wire:click="removeLogo">Delete This
                                     Company Logo</button>
                             @endif
                         </div>

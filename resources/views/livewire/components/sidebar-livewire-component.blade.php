@@ -8,10 +8,10 @@
                 <label class="text-white ms-3 fs-5 fw-bolder">{{ config('app.name') }}</label>
             </a>
             <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
+                <button class="btn btn-sm btn-toggle toggle-sidebar">
                     <i class="gg-menu-right"></i>
                 </button>
-                <button class="btn btn-toggle sidenav-toggler">
+                <button class="btn btn-sm btn-toggle sidenav-toggler">
                     <i class="gg-menu-left"></i>
                 </button>
             </div>
@@ -35,6 +35,13 @@
                     </span>
                     <h4 class="text-section">Components</h4>
                 </li>
+
+                <x-sidebar-link-collapsable-component prefix="/project-management" :sub="[
+                   'Jobs' => 'project-job',
+                ]">
+                    <i class="fas fa-clipboard"></i>
+                    <p>Project Management</p>
+                </x-sidebar-link-collapsable-component>
 
                 <x-sidebar-link-collapsable-component prefix="/reference" :sub="[
                    'Clients' => 'clients',

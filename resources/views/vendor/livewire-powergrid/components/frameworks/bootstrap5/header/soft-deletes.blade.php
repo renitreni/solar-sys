@@ -1,7 +1,7 @@
 @if (data_get($setUp, 'header.softDeletes'))
     <div class="btn-group">
         <button
-            class="btn btn-secondary btn-sm dropdown-toggle"
+            class="btn btn-sm btn-secondary btn-sm dropdown-toggle"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"

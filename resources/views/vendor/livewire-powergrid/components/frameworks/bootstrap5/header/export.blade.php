@@ -1,6 +1,6 @@
 <div class="dropdown">
     <button
-        class="btn btn-light dropdown-toggle"
+        class="btn btn-sm btn-light dropdown-toggle"
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"

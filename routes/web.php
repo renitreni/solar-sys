@@ -8,6 +8,8 @@ use App\Livewire\CustomerLivewire;
 use App\Livewire\DashboardLivewire;
 use App\Livewire\JobStatusLivewire;
 use App\Livewire\LoginLivewire;
+use App\Livewire\ProjectJobFormLivewire;
+use App\Livewire\ProjectJobLivewire;
 use App\Livewire\ServiceLivewire;
 use App\Livewire\UserLivewire;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,17 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/get-image', GetImage::class)->name('get-image');
 
     Route::get('/home', DashboardLivewire::class)->name('home');
+    
+    Route::prefix('project-management')->group(function () {
+        Route::get('/project-job', ProjectJobLivewire::class)->name('project-job');
+        Route::get('/project-job-form', ProjectJobFormLivewire::class)->name('project-job-form');
+    });
+
+    Route::prefix('reference')->group(function () {
+        Route::get('/clients', CustomerLivewire::class)->name('clients');
+        Route::get('/service', ServiceLivewire::class)->name('service');
+        Route::get('/job-status', JobStatusLivewire::class)->name('job-status');
+    });
 
     Route::prefix('users')->group(function () {
         Route::get('/', UserLivewire::class)->name('user');
@@ -30,11 +43,5 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     Route::prefix('settings')->group(function () {
         Route::get('/company-logo', CompanyLogoLivewire::class)->name('company-logo');
-    });
-
-    Route::prefix('reference')->group(function () {
-        Route::get('/clients', CustomerLivewire::class)->name('clients');
-        Route::get('/service', ServiceLivewire::class)->name('service');
-        Route::get('/job-status', JobStatusLivewire::class)->name('job-status');
     });
 });

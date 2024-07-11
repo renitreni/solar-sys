@@ -36,7 +36,7 @@ final class ClientTable extends PowerGridComponent
         return [
             Button::add('add-new')
                 ->slot('<i class="fas fa-plus"></i> Add New')
-                ->class('btn btn-success')
+                ->class('btn btn-sm btn-success')
                 ->dispatch('client-add', []),
         ];
     }
@@ -110,7 +110,7 @@ final class ClientTable extends PowerGridComponent
             Button::add('edit')
                 ->slot('Edit')
                 ->id()
-                ->class('btn btn-primary btn-sm my-1')
+                ->class('btn btn-sm btn-primary my-1')
                 ->dispatch('edit', ['rowId' => $row->id]),
         ];
     }

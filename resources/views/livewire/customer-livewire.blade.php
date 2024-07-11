@@ -63,14 +63,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
                     @if ($this->clientId)
-                        <button type="button" class="btn btn-danger" wire:click='destroy()'>Delete</button>
-                        <button type="button" class="btn btn-primary" wire:click='update()'>Update</button>
+                        <button type="button" class="btn btn-sm btn-danger" wire:click='destroy()'>Delete</button>
+                        <button type="button" class="btn btn-sm btn-primary" wire:click='update()'>Update</button>
                     @else
-                        <button type="button" class="btn btn-primary"  wire:click='store()'>Save</button>
+                        <button type="button" class="btn btn-sm btn-primary"  wire:click='store()'>Save</button>
                     @endif
                 </div>
             </div>

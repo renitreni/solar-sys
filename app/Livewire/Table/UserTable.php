@@ -98,7 +98,7 @@ final class UserTable extends PowerGridComponent
             Button::add('edit')
                 ->slot('<i class="fas fa-edit"></i>')
                 ->id()
-                ->class('btn btn-primary btn-sm my-1')
+                ->class('btn btn-sm btn-primary btn-sm my-1')
                 ->dispatch('edit', ['rowId' => $row->id]),
             Button::add('changepass')
                 ->slot('<i class="fas fa-key"></i>')
