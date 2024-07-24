@@ -28,7 +28,7 @@ class Project extends Model
         // TASK SECTION
         'task_price_total',
         'commercial_job_price',
-        'total',
+        'task_total',
         // RFI
         'rfi_messages',
     ];

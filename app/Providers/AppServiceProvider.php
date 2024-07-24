@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (app()->environment('local', 'development')) {
+            DB::listen(function ($query) {
+                logger(Str::replaceArray('?', $query->bindings, $query->sql));
+            });
+        }
     }
 }

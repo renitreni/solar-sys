@@ -11,6 +11,11 @@
                 <a href="{{ route('project-job-form') }}" type="button" class="btn btn-sm btn-sm btn-success">
                     <i class="fas fa-plus"></i> Add New
                 </a>
+                <div class="row">
+                    <div class="col-md-12">
+                        <livewire:project-table/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

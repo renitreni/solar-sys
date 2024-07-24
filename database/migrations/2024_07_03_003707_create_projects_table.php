@@ -29,7 +29,8 @@ return new class extends Migration
             $table->string('task_price_total')->nullable(); // 'task_price_total',
             $table->string('commercial_job_price')->nullable(); // 'commercial_job_price',
             $table->string('task_total')->nullable(); // 'total',
-            $table->string('rfi_messages')->nullable(); // 'rfi_messages',
+            $table->text('rfi_messages')->nullable(); // 'rfi_messages',
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -1,2 +1,6 @@
-
 @import "flatpickr/dist/flatpickr.min.css";
+
+.select2-selection__clear {
+    position: absolute;
+    left: 94% !important;
+}

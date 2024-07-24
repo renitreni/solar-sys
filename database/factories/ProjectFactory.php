@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,23 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
+        return [        
+            'client_id' => Client::inRandomOrder()->first()->id,
+            'project_number' => fake()->uuid(),
+            'property_type' => fake()->randomElement(['residential', 'commercial']),
+            'property_owner_name' => fake()->name(),
+            'property_address' => fake()->address(),
+            'property_state' => 'NYC',
+            'property_city' => 'Manhattan',
+            'property_area_code' => fake()->randomElement(['212', '646', '332']),
+            'wet_stamp_mailing_address' => fake()->address(),
+            'wet_stamp_count' => fake()->numberBetween(1, 10),
+            'shipping_number' => fake()->creditCardNumber(),
+            'priority_level' => fake()->randomElement(['Low', 'Medium', 'High', 'Immediate']),
+            'task_price_total' => 0,
+            'commercial_job_price' => 0,
+            'task_total' => 0,
+            'rfi_messages' => fake()->paragraph(8),
         ];
     }
 }

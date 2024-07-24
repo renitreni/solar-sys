@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Actions\GetClientSelect;
 use App\Http\Controllers\Actions\GetCompanyLogo;
 use App\Http\Controllers\Actions\GetImage;
 use App\Http\Controllers\LogoutController;
@@ -24,11 +25,14 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
     Route::get('/get-image', GetImage::class)->name('get-image');
 
+    Route::get('/get/selec2/clients', GetClientSelect::class)->name('get.client.select');
+
     Route::get('/home', DashboardLivewire::class)->name('home');
     
     Route::prefix('project-management')->group(function () {
         Route::get('/project-job', ProjectJobLivewire::class)->name('project-job');
-        Route::get('/project-job-form', ProjectJobFormLivewire::class)->name('project-job-form');
+        Route::get('/project-job-form/create', ProjectJobFormLivewire::class)->name('project-job-form');
+        Route::get('/project-job-form/edit/{id}', ProjectJobFormLivewire::class)->name('project-job-form.edit');
     });
 
     Route::prefix('reference')->group(function () {

@@ -7,3 +7,4 @@
 - Livewire V3 - https://livewire.laravel.com/docs/quickstart
 - Alpinejs - https://alpinejs.dev/start-here
 - Livewire Powergrid - https://livewire-powergrid.com/get-started/create-powergrid-table.html
+- GEO Names - https://github.com/nevadskiy/laravel-geonames

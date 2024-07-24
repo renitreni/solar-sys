@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/documentation/assets/styles.css') }}" />
     <link rel="stylesheet"
         href="{{ asset('vendor/documentation/assets/prism-normalize-whitespace.min.js') }}" />
-
+    @stack('styles')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -63,6 +63,7 @@
     <script src="{{ asset('vendor/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('vendor/assets/js/kaiadmin.min.js') }}"></script>
     @livewireScripts
+    @stack('scripts')
 </body>
 
 </html>
