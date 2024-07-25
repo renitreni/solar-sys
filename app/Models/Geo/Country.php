@@ -2,6 +2,7 @@
 
 namespace App\Models\Geo;
 
+use App\Models\Scopes\DefaultCountryScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -50,6 +51,11 @@ class Country extends Model
         'name',
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new DefaultCountryScope);
+    }
+    
     /**
      * Get a relationship with a continent.
      */

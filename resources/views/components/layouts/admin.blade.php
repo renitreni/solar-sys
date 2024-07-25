@@ -31,9 +31,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/assets/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/assets/css/kaiadmin.css') }}" />
-    <link rel="stylesheet" href="{{ asset('vendor/documentation/assets/styles.css') }}" />
-    <link rel="stylesheet"
-        href="{{ asset('vendor/documentation/assets/prism-normalize-whitespace.min.js') }}" />
+    <script src="{{ asset('vendor/assets/js/core/jquery-3.7.1.min.js') }}"></script>
     @stack('styles')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -54,7 +52,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('vendor/assets/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('vendor/assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('vendor/assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>

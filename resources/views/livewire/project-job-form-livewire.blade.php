@@ -32,47 +32,86 @@
                 <div id="panelsStayOpen-11" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-1">
                     <div class="accordion-body">
                         <div class="row">
-                            <div class="col-md-3" wire:ignore>
-                                <div class="form-group">
-                                    <label>Client</label>
-                                    <select id="client-select2" class="form-control">
-                                        @if($client)
-                                            <option value="{{ $client['id'] }}" selected>{{ $client['name'] }}</option>
-                                        @endif
-                                    </select>
+                            <div class="col-md-6 row">
+                                <div class="col-md-6" wire:ignore>
+                                    <div class="form-group">
+                                        <label>Client</label>
+                                        <select class="form-control client-select2">
+                                            @if ($client)
+                                                <option value="{{ $client['id'] }}" selected>{{ $client['name'] }}
+                                                </option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Project Number</label>
+                                        <input type="text" class="form-control" wire:model='project.project_number'>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" wire:ignore>
+                                        <label>Property Type</label>
+                                        <select id="property-type-select2"> {{-- Please see JS as select2 --}}
+                                            <option value="residential">Residential</option>
+                                            <option value="commercial">Commercial</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Property Owner Name</label>
+                                        <input type="text" class="form-control"
+                                            wire:model='project.property_owner_name'>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Property Address</label>
+                                        <input type="text" class="form-control"
+                                            wire:model='project.property_address'>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Project Number</label>
-                                    <input type="text" class="form-control" wire:model='project.project_number'>
+                            <div class="col-md-6">
+                                <div class="col-md-12 shadow h-100">
+                                    Map here.
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group" wire:ignore>
-                                    <label>Property Type</label>
-                                    <select id="property-type-select2"> {{-- Please see JS as select2 --}}
-                                        <option value="residential">Residential</option>
-                                        <option value="commercial">Commercial</option>
+                                    <label>Property City</label>
+                                    <select class="form-select" id="property-city-select2">
+                                        @foreach ($cities as $city)
+                                            <option value="{{ $city->name }}">{{ $city->name }}</option>
+                                        @endforeach
                                     </select>
+                                    {{ $project['property_city'] }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" wire:ignore>
+                                    <label>Property State</label>
+                                    <select id="property-state-select2">
+                                        @foreach ($states as $division)
+                                            <option value="{{ $division->name }}">{{ $division->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    {{ $project['property_state'] }}
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Property Owner Name</label>
-                                    <input type="text" class="form-control" wire:model='project.property_owner_name'>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Property Address</label>
-                                    <input type="text" class="form-control" wire:model='project.property_address'>
+                                    <label>Property Area Code</label>
+                                    <input type="text" class="form-control" wire:model='project.property_area_code'>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Mailing Address for Wet Stamps</label>
-                                    <input type="text" class="form-control" wire:model='project.wet_stamp_mailing_address'>
+                                    <input type="text" class="form-control"
+                                        wire:model='project.wet_stamp_mailing_address'>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -317,78 +356,113 @@
         </div>
     </div>
 
-    <!-- Include the Quill library -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <!-- Initialize Quill editor -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        const quill = new Quill('#rfi-editor', {
-            theme: 'snow'
-        });
-        const quill2 = new Quill('#client-request-editor', {
-            theme: 'snow'
-        });
+        $(document).ready(function() {
+            const quill = new Quill('#rfi-editor', {
+                theme: 'snow'
+            });
+            const quill2 = new Quill('#client-request-editor', {
+                theme: 'snow'
+            });
 
-        quill.on('text-change', function() {
-            let value = document.getElementsByClassName('ql-editor')[0].innerHTML;
-            @this.set('rfi', value)
-        })
+            quill.on('text-change', function() {
+                let value = document.getElementsByClassName('ql-editor')[0].innerHTML;
+                @this.set('rfi', value)
+            })
 
-        quill2.on('text-change', function() {
-            let value = document.getElementsByClassName('ql-editor')[0].innerHTML;
-            @this.set('job_addtional_info', value)
-        })
+            quill2.on('text-change', function() {
+                let value = document.getElementsByClassName('ql-editor')[0].innerHTML;
+                @this.set('job_addtional_info', value)
+            })
 
-        // START: CLIENT
-        $('#client-select2').select2({
-            theme: 'bootstrap-5',
-            allowClear: true,
-            placeholder: 'Select Options',
-            ajax: {
-                url: '{{ route('get.client.select') }}',
-                dataType: 'json'
-            }
+            // START: CLIENT
+            $('.client-select2').select2({
+                theme: 'bootstrap-5',
+                allowClear: true,
+                placeholder: 'Select Options',
+                ajax: {
+                    url: '{{ route('get.client.select') }}',
+                    dataType: 'json'
+                }
+            });
+
+            $('.client-select2').on('change', function(e) {
+                var data = $(this).val();
+                @this.set('project.client_id', data);
+            });
+            // END: CLIENT
+
+            // START: PROPERTY TYPE
+            $('#property-type-select2').select2({
+                width: '100%',
+                theme: 'bootstrap-5',
+                allowClear: true,
+                minimumResultsForSearch: -1,
+                placeholder: 'Select Options',
+            });
+
+            @if ($project)
+                $('#property-type-select2').val('{{ $project['property_type'] }}').trigger('change');
+            @endif
+
+            $('#property-type-select2').on('change', function(e) {
+                var data = $(this).val();
+                @this.set('project.property_type', data);
+            });
+            // END: PROPERTY TYPE
+
+            // START: PROPERTY CITY
+            $('#property-city-select2').select2({
+                width: '100%',
+                theme: 'bootstrap-5',
+                allowClear: true,
+                placeholder: 'Select Options',
+            });
+
+            @if ($project)
+                $('#property-city-select2').val('{{ $project['property_city'] }}').trigger('change');
+            @endif
+
+            $('#property-city-select2').on('change', function(e) {
+                var data = $(this).val();
+                @this.set('project.property_city', data);
+            });
+            // END: PROPERTY CITY
+
+            // START: PROPERTY STATE
+            $('#property-state-select2').select2({
+                width: '100%',
+                theme: 'bootstrap-5',
+                allowClear: true,
+                placeholder: 'Select Options',
+            });
+            console.log("$('#property-state-select2').val('{{ $project['property_state'] }}').trigger('change');")
+            @if ($project)
+                $('#property-state-select2').val('{{ $project['property_state'] }}').trigger('change');
+            @endif
+
+            $('#property-state-select2').on('change', function(e) {
+                var data = $(this).val();
+                @this.set('project.property_state', data);
+            });
+            // END: PROPERTY STATE
         });
-
-        $('#client-select2').on('change', function(e) {
-            var data = $(this).val();
-            @this.set('project.client_id', data);
-        });
-        // END: CLIENT
-
-        // START: PROPERTY TYPE
-        $('#property-type-select2').select2({
-            width: '100%',
-            theme: 'bootstrap-5',
-            allowClear: true,
-            minimumResultsForSearch: -1,
-            placeholder: 'Select Options',
-        });
-
-        @if($project)
-            $('#property-type-select2').val('{{ $project['property_type'] }}').trigger('change');
-        @endif
-        
-        $('#property-type-select2').on('change', function(e) {
-            var data = $(this).val();
-            @this.set('project.property_type', data);
-        });
-        // END: PROPERTY TYPE
     </script>
 </div>
+
+@push('scripts')
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+@endpush
 
 @push('styles')
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-    <!-- Or for RTL support -->
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endpush

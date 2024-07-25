@@ -16,6 +16,8 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     'company-logo' => 'images/company-logo.png',
+
+    'country' => env('APP_COUNTRY', 'US'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

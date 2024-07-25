@@ -23,7 +23,7 @@ class ProjectFactory extends Factory
             'property_type' => fake()->randomElement(['residential', 'commercial']),
             'property_owner_name' => fake()->name(),
             'property_address' => fake()->address(),
-            'property_state' => 'NYC',
+            'property_state' => 'New York',
             'property_city' => 'Manhattan',
             'property_area_code' => fake()->randomElement(['212', '646', '332']),
             'wet_stamp_mailing_address' => fake()->address(),
