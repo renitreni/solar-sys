@@ -37,7 +37,7 @@
                 </li>
 
                 <x-sidebar-link-collapsable-component prefix="/project-management" :sub="[
-                   'Jobs' => 'project-job',
+                   'Projecs' => 'project-job',
                 ]">
                     <i class="fas fa-clipboard"></i>
                     <p>Project Management</p>

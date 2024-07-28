@@ -38,8 +38,8 @@ class Project extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function jobs()
+    public function projectJob()
     {
-        return $this->hasMany(ProjectJob::class);
+        return $this->hasOne(ProjectJob::class);
     }
 }

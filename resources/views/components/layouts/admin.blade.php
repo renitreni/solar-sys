@@ -27,14 +27,14 @@
             }
         });
     </script>
-
-    <link rel="stylesheet" href="{{ asset('vendor/assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('vendor/assets/css/plugins.min.css') }}" />
+    
     <link rel="stylesheet" href="{{ asset('vendor/assets/css/kaiadmin.css') }}" />
     <script src="{{ asset('vendor/assets/js/core/jquery-3.7.1.min.js') }}"></script>
-    @stack('styles')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @livewireStyles  
+    <x-livewire-alert::scripts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
+    @stack('styles')
 </head>
 
 <body>

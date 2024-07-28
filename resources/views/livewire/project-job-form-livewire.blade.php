@@ -11,10 +11,15 @@
                     <div>
                         <a href="{{ route('project-job') }}" type="button" class="btn btn-sm btn-sm btn-black">Cancel</a>
                     </div>
-                    <div>
-                        <a href="{{ route('project-job-form') }}" type="button"
-                            class="btn btn-sm btn-sm btn-primary">Save</a>
-                    </div>
+                    @if ($projectId)
+                        <div>
+                            <button type="button" wire:click='update' class="btn btn-sm btn-primary">Update</button>
+                        </div>
+                    @else
+                        <div>
+                            <button type="button" wire:click='store' class="btn btn-sm btn-primary">Save</button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -22,343 +27,306 @@
     <div class="row">
         <div class="accordion" id="accordionPanelsStayOpen">
             {{-- ---------------------------- --}}
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-1">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-11" aria-expanded="true" aria-controls="panelsStayOpen-11">
-                        Project
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-11" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-1">
-                    <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-md-6 row">
-                                <div class="col-md-6" wire:ignore>
-                                    <div class="form-group">
-                                        <label>Client</label>
-                                        <select class="form-control client-select2">
-                                            @if ($client)
-                                                <option value="{{ $client['id'] }}" selected>{{ $client['name'] }}
-                                                </option>
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Project Number</label>
-                                        <input type="text" class="form-control" wire:model='project.project_number'>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group" wire:ignore>
-                                        <label>Property Type</label>
-                                        <select id="property-type-select2"> {{-- Please see JS as select2 --}}
-                                            <option value="residential">Residential</option>
-                                            <option value="commercial">Commercial</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Property Owner Name</label>
-                                        <input type="text" class="form-control"
-                                            wire:model='project.property_owner_name'>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Property Address</label>
-                                        <input type="text" class="form-control"
-                                            wire:model='project.property_address'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-12 shadow h-100">
-                                    Map here.
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group" wire:ignore>
-                                    <label>Property City</label>
-                                    <select class="form-select" id="property-city-select2">
-                                        @foreach ($cities as $city)
-                                            <option value="{{ $city->name }}">{{ $city->name }}</option>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Project</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 row">
+                            <div class="col-md-6" wire:ignore>
+                                <div class="form-group">
+                                    <label>Client</label>
+                                    <select class="form-select" wire:model='clientId'>
+                                        <option value="">-- Select Option --</option>
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client['id'] }}">{{ $client['name'] }}</option>
                                         @endforeach
                                     </select>
-                                    {{ $project['property_city'] }}
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group" wire:ignore>
-                                    <label>Property State</label>
-                                    <select id="property-state-select2">
-                                        @foreach ($states as $division)
-                                            <option value="{{ $division->name }}">{{ $division->name }}</option>
-                                        @endforeach
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Project Number</label>
+                                    <input type="text" class="form-control" wire:model='projectNumber'>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Property Type</label>
+                                    <select class="form-select" wire:model='propertyType'>
+                                        <option value="">-- Select Option --</option>
+                                        <option value="residential">Residential</option>
+                                        <option value="commercial">Commercial</option>
                                     </select>
-                                    {{ $project['property_state'] }}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Property Area Code</label>
-                                    <input type="text" class="form-control" wire:model='project.property_area_code'>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Mailing Address for Wet Stamps</label>
-                                    <input type="text" class="form-control"
-                                        wire:model='project.wet_stamp_mailing_address'>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Number of Wet Stamps</label>
-                                    <input type="text" class="form-control" wire:model='project.wet_stamp_count'>
+                                    <label>Property Owner Name</label>
+                                    <input type="text" class="form-control" wire:model='propertyOwnerName'>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4>Related Jobs</h4>
-                                    </div>
-                                    <div>
+                                <div class="form-group">
+                                    <label>Property Address</label>
+                                    <input type="text" class="form-control" wire:model='propertyAddress'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-12 shadow h-100">
+                                Map here.
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Property State {{ $project['property_state'] ?? '' }}</label>
+                                <select class="form-select" wire:model.live='propertyState'>
+                                    <option value="">-- Select Option --</option>
+                                    @foreach ($states as $division)
+                                        <option value="{{ $division['name'] }}">{{ $division['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Property City</label>
+                                <select class="form-select" wire:model.live="propertyCity">
+                                    <option value="">-- Select Option --</option>
+                                    @foreach ($cities ?? [] as $city)
+                                        <option value="{{ $city['name'] }}">{{ $city['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Property Area Code</label>
+                                <input type="text" class="form-control" wire:model='propertyAreaCode'>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Mailing Address for Wet Stamps</label>
+                                <input type="text" class="form-control" wire:model='wetStampMailingAddress'>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Number of Wet Stamps</label>
+                                <input type="text" class="form-control" wire:model='wetStampCount'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- ---------------------------- --}}
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Related Jobs</div>
+                </div>
+                <div class="card-body">
 
-                                    </div>
+                </div>
+            </div>
+            {{-- ---------------------------- --}}
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Job</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Service Order Link</label>
+                                <input type="text" class="form-control" wire:model='serviceOrderUrl'>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Service Order Form</label>
+                                <input type="text" class="form-control" wire:model='serviceOrderForm'>
+                            </div>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-auto">
+                            <div class="form-group d-flex flex-column">
+                                <label class="form-label">In Review</label>
+                                <div class="selectgroup selectgroup-secondary selectgroup-pills">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="icon-input" value="1"
+                                            wire:model='inReview' class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fa fa-check"></i></span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="icon-input" value="0"
+                                            wire:model='inReview' class="selectgroup-input" checked="">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fa fa-times"></i></span>
+                                    </label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Request #</label>
+                                <input type="text" class="form-control" wire:model='requestNo'>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Number</label>
+                                <input type="text" class="form-control" wire:model='jobNo'>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Status</label>
+                                <input type="text" class="form-control" wire:model='jobStatus'>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Estimated Days to Complete</label>
+                                <input type="text" class="form-control date-control"
+                                    wire:model='estimatedCompletion' readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Estimated Days to Complete Override</label>
+                                <input type="text" class="form-control date-control"
+                                    wire:model='estimatedCompletionOverride' readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Date Received Formula</label>
+                                <input type="text" class="form-control date-control"
+                                    wire:model='dateReceivedFormula' readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Date Due</label>
+                                <input type="text" class="form-control date-control" wire:model='dateDue'
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Date Completed</label>
+                                <input type="text" class="form-control date-control"
+                                    wire:model='dateCompleted' readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Date Cancelled</label>
+                                <input type="text" class="form-control date-control"
+                                    wire:model='dateCancelled' readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" wire:ignore>
+                                <label>Date Sent to Client</label>
+                                <input type="text" class="form-control date-control" wire:model='dateSent'
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Client Contact</label>
+                                <input type="text" class="form-control" wire:model='clientName'>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Client Contact E-mail</label>
+                                <input type="text" class="form-control" wire:model='clientEmail'>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Client Contact E-mail Override</label>
+                                <input type="text" class="form-control" wire:model='clientEmailOverride'>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Deliverables Email</label>
+                                <input type="text" class="form-control" wire:model='deliverablesEmail'>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group" wire:ignore>
+                                <label>Additional Information From Client</label>
+                                <!-- Create the editor container -->
+                                <div id="client-request-editor" style="height:180px"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             {{-- ---------------------------- --}}
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-2">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-22" aria-expanded="true" aria-controls="panelsStayOpen-22">
-                        Job
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-22" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-2">
-                    <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Service Order Link</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Service Order Form</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6"></div>
-                            <div class="col-md-auto">
-                                <div class="form-group d-flex flex-column">
-                                    <label class="form-label">In Review</label>
-                                    <div class="selectgroup selectgroup-secondary selectgroup-pills">
-                                        <label class="selectgroup-item">
-                                            <input type="radio" name="icon-input" value="1"
-                                                class="selectgroup-input">
-                                            <span class="selectgroup-button selectgroup-button-icon"><i
-                                                    class="fa fa-check"></i></span>
-                                        </label>
-                                        <label class="selectgroup-item">
-                                            <input type="radio" name="icon-input" value="0"
-                                                class="selectgroup-input" checked="">
-                                            <span class="selectgroup-button selectgroup-button-icon"><i
-                                                    class="fa fa-times"></i></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Job Request #</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Job Number</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Job Status</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Estimated Days to Complete</label>
-                                    <input type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Estimated Days to Complete Override</label>
-                                    <input type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6"></div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Date Received Formula</label>
-                                    <input type="datetime" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Date Due</label>
-                                    <input type="datetime" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6"></div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Date Completed</label>
-                                    <input type="datetime" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Date Cancelled</label>
-                                    <input type="datetime" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Date Sent to Client</label>
-                                    <input type="datetime" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Client Contact</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Client Contact E-mail</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Client Contact E-mail Override</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Deliverables Email</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group" wire:ignore>
-                                    <label>Additional Information From Client</label>
-                                    <!-- Create the editor container -->
-                                    <div id="client-request-editor" style="height:180px"></div>
-                                </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">RFI (Request for Information)</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" wire:ignore>
+                                <label>Enter your request</label>
+                                <!-- Create the editor container -->
+                                <div id="rfi-editor" style="height:180px"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             {{-- ---------------------------- --}}
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-3">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-33" aria-expanded="true" aria-controls="panelsStayOpen-33">
-                        RFI (Request for Information)
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-33" class="accordion-collapse collapse show"
-                    aria-labelledby="panelsStayOpen-3">
-                    <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group" wire:ignore>
-                                    <label>Enter your request</label>
-                                    <!-- Create the editor container -->
-                                    <div id="rfi-editor" style="height:180px"></div>
-                                </div>
-                            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Tracking Numbers</div>
+                </div>
+                <div class="card-body">
+
+                </div>
+            </div>
+            {{-- ---------------------------- --}}
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Tasks</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Task Price Total</label>
+                            <input type="number" class="form-control" wire:model='taskPriceTotal'>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-4">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-44" aria-expanded="true" aria-controls="panelsStayOpen-44">
-                        Tracking Numbers
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-44" class="accordion-collapse collapse show"
-                    aria-labelledby="panelsStayOpen-4">
-                    <div class="accordion-body">
-                        ---
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-5">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-55" aria-expanded="true" aria-controls="panelsStayOpen-55">
-                        Tasks
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-55" class="accordion-collapse collapse show"
-                    aria-labelledby="panelsStayOpen-5">
-                    <div class="accordion-body">
-                        ---
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-6">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-66" aria-expanded="true" aria-controls="panelsStayOpen-66">
-                        Price
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-66" class="accordion-collapse collapse show"
-                    aria-labelledby="panelsStayOpen-6">
-                    <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="">Task Price Total</label>
-                                <input type="number" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="">Commercial Job Price</label>
-                                <input type="number" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="">Total</label>
-                                <input type="number" class="form-control">
-                            </div>
+                        <div class="col-md-4">
+                            <label for="">Commercial Job Price</label>
+                            <input type="number" class="form-control" wire:model='commercialJobPrice'>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Total</label>
+                            <input type="number" class="form-control" wire:model='taskTotal'>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             const quill = new Quill('#rfi-editor', {
@@ -370,85 +338,22 @@
 
             quill.on('text-change', function() {
                 let value = document.getElementsByClassName('ql-editor')[0].innerHTML;
-                @this.set('rfi', value)
+                @this.set('rfiMessages', value)
             })
 
             quill2.on('text-change', function() {
                 let value = document.getElementsByClassName('ql-editor')[0].innerHTML;
-                @this.set('job_addtional_info', value)
+                @this.set('additionalInfo', value)
             })
 
-            // START: CLIENT
-            $('.client-select2').select2({
-                theme: 'bootstrap-5',
-                allowClear: true,
-                placeholder: 'Select Options',
-                ajax: {
-                    url: '{{ route('get.client.select') }}',
-                    dataType: 'json'
-                }
+            quill2.setText('{{ $additionalInfo }}');
+            quill.setText('{{ $rfiMessages }}');
+
+            $('.date-control').flatpickr({
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
             });
-
-            $('.client-select2').on('change', function(e) {
-                var data = $(this).val();
-                @this.set('project.client_id', data);
-            });
-            // END: CLIENT
-
-            // START: PROPERTY TYPE
-            $('#property-type-select2').select2({
-                width: '100%',
-                theme: 'bootstrap-5',
-                allowClear: true,
-                minimumResultsForSearch: -1,
-                placeholder: 'Select Options',
-            });
-
-            @if ($project)
-                $('#property-type-select2').val('{{ $project['property_type'] }}').trigger('change');
-            @endif
-
-            $('#property-type-select2').on('change', function(e) {
-                var data = $(this).val();
-                @this.set('project.property_type', data);
-            });
-            // END: PROPERTY TYPE
-
-            // START: PROPERTY CITY
-            $('#property-city-select2').select2({
-                width: '100%',
-                theme: 'bootstrap-5',
-                allowClear: true,
-                placeholder: 'Select Options',
-            });
-
-            @if ($project)
-                $('#property-city-select2').val('{{ $project['property_city'] }}').trigger('change');
-            @endif
-
-            $('#property-city-select2').on('change', function(e) {
-                var data = $(this).val();
-                @this.set('project.property_city', data);
-            });
-            // END: PROPERTY CITY
-
-            // START: PROPERTY STATE
-            $('#property-state-select2').select2({
-                width: '100%',
-                theme: 'bootstrap-5',
-                allowClear: true,
-                placeholder: 'Select Options',
-            });
-            console.log("$('#property-state-select2').val('{{ $project['property_state'] }}').trigger('change');")
-            @if ($project)
-                $('#property-state-select2').val('{{ $project['property_state'] }}').trigger('change');
-            @endif
-
-            $('#property-state-select2').on('change', function(e) {
-                var data = $(this).val();
-                @this.set('project.property_state', data);
-            });
-            // END: PROPERTY STATE
         });
     </script>
 </div>

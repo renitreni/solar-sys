@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\GlobalParameter;
 use App\Models\JobStatus;
 use App\Models\Project;
+use App\Models\ProjectJob;
 use App\Models\Service;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -32,6 +33,6 @@ class DatabaseSeeder extends Seeder
         Client::factory(20)->create();
         JobStatus::factory(20)->create();
         Service::factory(20)->create();
-        Project::factory(50)->create();
+        Project::factory(50)->has(ProjectJob::factory(1))->create();
     }
 }

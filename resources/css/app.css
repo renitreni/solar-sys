@@ -1,6 +1,11 @@
 @import "flatpickr/dist/flatpickr.min.css";
 
-.select2-selection__clear {
-    position: absolute;
-    left: 94% !important;
+.card .card-header {
+    background-color: white;
+}
+.card .card-body {
+    background-color: white;
+}
+body {
+    background-color: rgb(244, 244, 244);
 }
