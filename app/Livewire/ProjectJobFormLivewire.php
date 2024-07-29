@@ -22,6 +22,7 @@ class ProjectJobFormLivewire extends FormComponent
     public $states;
     public $project;
     public $job;
+    public $clientKeyword;
 
     // PROJECT
     public $clientId;
@@ -65,10 +66,11 @@ class ProjectJobFormLivewire extends FormComponent
 
     public function mount($id = null)
     {   
-        $this->project = Project::with('projectJob')->find($id);
+        $this->project = Project::with('projectJob', 'client')->find($id);
         if($this->project) {
             $this->initModelData($this->project);
             $this->initModelData($this->project->projectJob);
+            $this->clientName = $this->project->client->name;
         }
 
         $this->country = Country::with(['divisions:id,name,country_id'])->first();
@@ -81,6 +83,11 @@ class ProjectJobFormLivewire extends FormComponent
         $this->clients = Client::all()->toArray();
     }
 
+    public function render()
+    {
+        return view('livewire.project-job-form-livewire');
+    }
+
     public function updated($property)
     {
         if($property == 'project.property_state') {
@@ -89,9 +96,9 @@ class ProjectJobFormLivewire extends FormComponent
         }
     }
 
-    public function render()
+    public function updatedClientKeyword($value)
     {
-        return view('livewire.project-job-form-livewire');
+        $this->clients = Client::search($value)->get()->toArray();
     }
 
     private function getCityList()

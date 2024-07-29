@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Project extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         // ProjectID INT PRIMARY KEY AUTO_INCREMENT,
@@ -32,6 +33,11 @@ class Project extends Model
         // RFI
         'rfi_messages',
     ];
+
+    public function toSearchableArray(): array
+    {
+        return ['property_address' => $this->property_address];
+    }
 
     public function client()
     {

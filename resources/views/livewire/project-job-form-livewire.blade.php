@@ -34,15 +34,29 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 row">
-                            <div class="col-md-6" wire:ignore>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Client</label>
-                                    <select class="form-select" wire:model='clientId'>
-                                        <option value="">-- Select Option --</option>
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client['id'] }}">{{ $client['name'] }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="position-relative" x-data="dropdownSearch">
+                                        <input class="form-control" wire:model.live='clientName'
+                                            x-on:click="hide = !hide" readonly>
+                                        @if ($clients)
+                                            <div class="position-absolute border bg-white z-3 w-100" x-show="!hide"
+                                                wire:self>
+                                                <div class="p-2">
+                                                    <input class="form-control" wire:model.live='clientKeyword'>
+                                                </div>
+                                                <div style="max-height: 300px;" class="overflow-scroll">
+                                                    @foreach ($clients as $client)
+                                                        <button class="btn btn-default w-100 text-start"
+                                                            x-on:click="actionSelect('{{ $client['id'] }}', '{{ $client['name'] }}')">
+                                                            {{ $client['name'] }}
+                                                        </button>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -156,14 +170,14 @@
                                 <label class="form-label">In Review</label>
                                 <div class="selectgroup selectgroup-secondary selectgroup-pills">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="1"
-                                            wire:model='inReview' class="selectgroup-input">
+                                        <input type="radio" name="icon-input" value="1" wire:model='inReview'
+                                            class="selectgroup-input">
                                         <span class="selectgroup-button selectgroup-button-icon"><i
                                                 class="fa fa-check"></i></span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="icon-input" value="0"
-                                            wire:model='inReview' class="selectgroup-input" checked="">
+                                        <input type="radio" name="icon-input" value="0" wire:model='inReview'
+                                            class="selectgroup-input" checked="">
                                         <span class="selectgroup-button selectgroup-button-icon"><i
                                                 class="fa fa-times"></i></span>
                                     </label>
@@ -221,15 +235,15 @@
                         <div class="col-md-3">
                             <div class="form-group" wire:ignore>
                                 <label>Date Completed</label>
-                                <input type="text" class="form-control date-control"
-                                    wire:model='dateCompleted' readonly>
+                                <input type="text" class="form-control date-control" wire:model='dateCompleted'
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" wire:ignore>
                                 <label>Date Cancelled</label>
-                                <input type="text" class="form-control date-control"
-                                    wire:model='dateCancelled' readonly>
+                                <input type="text" class="form-control date-control" wire:model='dateCancelled'
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -328,6 +342,17 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>
+        function dropdownSearch() {
+            return {
+                hide: true,
+                actionSelect(id, label) {
+                    this.hide = !this.hide;
+                    @this.set('clientId', id);
+                    @this.set('clientName', label);
+                    @this.set('clientKeyword', '');
+                }
+            }
+        }
         $(document).ready(function() {
             const quill = new Quill('#rfi-editor', {
                 theme: 'snow'
