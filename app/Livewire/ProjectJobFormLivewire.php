@@ -23,6 +23,8 @@ class ProjectJobFormLivewire extends FormComponent
     public $project;
     public $job;
     public $clientKeyword;
+    public $propertyAddressKeyword;
+    public $propertyAddresses;
 
     // PROJECT
     public $clientId;
@@ -68,6 +70,7 @@ class ProjectJobFormLivewire extends FormComponent
     {   
         $this->project = Project::with('projectJob', 'client')->find($id);
         if($this->project) {
+            // Bind existing local variables to db columns
             $this->initModelData($this->project);
             $this->initModelData($this->project->projectJob);
             $this->clientName = $this->project->client->name;
@@ -81,6 +84,7 @@ class ProjectJobFormLivewire extends FormComponent
         }
         
         $this->clients = Client::all()->toArray();
+        $this->propertyAddresses = Project::all()->toArray();
     }
 
     public function render()
@@ -101,6 +105,18 @@ class ProjectJobFormLivewire extends FormComponent
         $this->clients = Client::search($value)->get()->toArray();
     }
 
+    public function updatedPropertyAddressKeyword($value)
+    {
+        $this->propertyAddresses = Project::search($value)->get()->toArray();
+    }
+
+    public function updatedPropertyState($value)
+    {
+        $stateModel = Division::where('name', $this->project['property_state'])->first();
+        $this->cities = City::where('division_id', $stateModel->id)->get()->toArray();
+        $this->propertyCity = null;
+    }
+
     private function getCityList()
     {
         $stateModel = Division::where('name', $this->project['property_state'])->first();
@@ -110,7 +126,7 @@ class ProjectJobFormLivewire extends FormComponent
     public function update()
     {
         // Project Update
-        $project = Project::with('projecJob')->find($this->project['id']);
+        $project = Project::with('projectJob')->find($this->project['id']);
         $project->client_id = $this->clientId;
         $project->project_number = $this->projectNumber;
         $project->property_type = $this->propertyType;
@@ -130,7 +146,7 @@ class ProjectJobFormLivewire extends FormComponent
         $project->save();
 
         // Job Update
-        $job = $project->projecJob;
+        $job = $project->projectJob;
         $job->job_name = $this->jobName;
         $job->service_order_url = $this->serviceOrderUrl;
         $job->request_no = $this->requestNo;
@@ -150,6 +166,8 @@ class ProjectJobFormLivewire extends FormComponent
         $job->client_email_override = $this->clientEmailOverride;
         $job->deliverables_email = $this->deliverablesEmail;
         $job->additional_info = $this->additionalInfo;
+        $job->save();
+
         $this->alert('success', 'Updated Sucessfully!');
     }
 }

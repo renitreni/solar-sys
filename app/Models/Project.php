@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
 
 class Project extends Model
 {
     use HasFactory, SoftDeletes, Searchable;
+
+    public $searchVersion;
 
     protected $fillable = [
         // ProjectID INT PRIMARY KEY AUTO_INCREMENT,

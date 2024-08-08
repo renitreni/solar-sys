@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', LoginLivewire::class)->name('login');
+    Route::get('/', fn () => redirect()->route('login'));
 });
 
 Route::get('/get-company-logo', GetCompanyLogo::class)->name('get-company-logo');
@@ -28,7 +29,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/get/selec2/clients', GetClientSelect::class)->name('get.client.select');
 
     Route::get('/home', DashboardLivewire::class)->name('home');
-    
+
     Route::prefix('project-management')->group(function () {
         Route::get('/project-job', ProjectJobLivewire::class)->name('project-job');
         Route::get('/project-job-form/create', ProjectJobFormLivewire::class)->name('project-job-form');
