@@ -17,7 +17,7 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        return [        
+        return [
             'client_id' => Client::inRandomOrder()->first()->id,
             'project_number' => fake()->uuid(),
             'property_type' => fake()->randomElement(['residential', 'commercial']),

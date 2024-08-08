@@ -9,7 +9,7 @@ use Laravel\Scout\Searchable;
 
 class Client extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',

@@ -1,24 +1,24 @@
 @import "flatpickr/dist/flatpickr.min.css";
 
 .card .card-header {
-    background-color: white;
+    background-color: white !important;
 }
 .card .card-body {
-    background-color: white;
+    background-color: white !important;
 }
 body {
-    background-color: rgb(244, 244, 244);
+    background-color: rgb(244, 244, 244) !important;
 }
 
 .fixed-div {
-    z-index: 10;
-    position: fixed;
-    padding: 20px;
-    margin-top: 5rem;
-    background-color: white;
-    width: 83%;
+    z-index: 10 !important;
+    position: fixed !important;
+    padding: 20px !important;
+    margin-top: 5rem !important;
+    background-color: white !important;
+    width: 81.3% !important;
 }
 
 .fixed-div-distance {
-    margin-top: 5rem;
+    margin-top: 5rem !important;
 }

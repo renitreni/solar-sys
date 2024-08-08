@@ -22,16 +22,43 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 row">
-                        <div class="col-md-6">
-                            <x-select-options-component :keyword='$clientKeyword' :lists='$clients' idKey='id'
-                                labelKey='name' inputName='clientName' inputKeyword='clientKeyword'>
+                        <div class="col-md-12">
+                            <x-select-options-component :lists='$clients' keyword='clientKeyword' idKey='id'
+                                labelKey='name' inputId='clientId' :inputName='$clientName' :livewireId='$this->__id'>
                                 <x-slot:label>Client</x-slot:label>
                             </x-select-options-component>
+                            @error('clientId')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-12">
+                            <x-select-options-component :lists='$propertyAddresses' keyword='propertyAddressKeyword'
+                                idKey='property_address' labelKey='property_address' inputId='propertyAddress'
+                                openSelect=true :inputName='$propertyAddress'>
+                                <x-slot:label>Property Address</x-slot:label>
+                            </x-select-options-component>
+                            @error('propertyAddress')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Project Number</label>
                                 <input type="text" class="form-control" wire:model='projectNumber'>
+                            </div>
+                            @error('projectNumber')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Priority Level</label>
+                                <select class="form-select" wire:model='priorityLevel'>
+                                    <option value="">-- Select Option --</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -50,16 +77,6 @@
                                 <input type="text" class="form-control" wire:model='propertyOwnerName'>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <x-select-options-component :keyword='$propertyAddressKeyword' :lists='$propertyAddresses' 
-                            idKey='property_address'
-                            labelKey='property_address' 
-                            inputName='propertyAddress' 
-                            inputKeyword='propertyAddressKeyword'
-                            openSelect=true>
-                                <x-slot:label>Property Address</x-slot:label>
-                            </x-select-options-component>
-                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="col-md-12 shadow-sm h-100">
@@ -70,6 +87,9 @@
                         <div class="form-group">
                             <label>Property Area Code</label>
                             <input type="text" class="form-control" wire:model='propertyAreaCode'>
+                            @error('propertyAreaCode')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -81,6 +101,9 @@
                                     <option value="{{ $division['name'] }}">{{ $division['name'] }}</option>
                                 @endforeach
                             </select>
+                            @error('propertyState')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -92,6 +115,9 @@
                                     <option value="{{ $city['name'] }}">{{ $city['name'] }}</option>
                                 @endforeach
                             </select>
+                            @error('propertyCity')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -115,7 +141,6 @@
                 <div class="card-title">Related Jobs</div>
             </div>
             <div class="card-body">
-
             </div>
         </div>
         {{-- ---------------------------- --}}
@@ -263,7 +288,6 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">RFI (Request for Information)</div>
-                {{ $rfiMessages }}
             </div>
             <div class="card-body">
                 <div class="row">
@@ -318,58 +342,26 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>
-        window.addEventListener('load', function() {
-            // Select all elements with the 'hidden' attribute
-            const hiddenElements = document.querySelectorAll('[hidden]');
-
-            // Iterate over the NodeList and remove the 'hidden' attribute from each element
-            hiddenElements.forEach(element => {
-                element.removeAttribute('hidden');
-            });
-        });
-
-        function dropdownSearchClient() {
-            return {
-                hideClient: true,
-                actionSelect(id, label) {
-                    this.hideClient = !this.hideClient;
-                    @this.set('clientId', id)
-                    @this.set('clientName', label)
-                    @this.set('clientKeyword', '')
-                }
-            }
-        }
-
-        function dropdownSearch() {
-            return {
-                hide: true,
-                actionSelect(id, label) {
-                    this.hide = !this.hide;
-                    @this.set('propertyAddress', label)
-                    @this.set('propertyAddressKeyword', '')
-                }
-            }
-        }
         $(document).ready(function() {
-            const quill = new Quill('#rfi-editor', {
+            const quill = new Quill('#client-request-editor', {
                 theme: 'snow'
             });
-            const quill2 = new Quill('#client-request-editor', {
+            const quill2 = new Quill('#rfi-editor', {
                 theme: 'snow'
             });
 
             quill.on('text-change', function() {
-                let value = document.getElementsById('ql-editor')[0].innerHTML;
-                @this.set('rfiMessages', value)
-            })
-
-            quill2.on('text-change', function() {
-                let value = document.getElementsByClassName('ql-editor')[0].innerHTML;
+                let value = $('#client-request-editor > .ql-editor').html();
                 @this.set('additionalInfo', value)
             })
 
-            quill.setText('{{ $rfiMessages }}');
-            quill2.setText('{{ $additionalInfo }}');
+            quill2.on('text-change', function() {
+                let value = $('#rfi-editor > .ql-editor').html();
+                @this.set('rfiMessages', value)
+            })
+
+            $('#rfi-editor > .ql-editor').html('{!! $rfiMessages !!}');
+            $('#client-request-editor > .ql-editor').html('{!! $additionalInfo !!}');
 
             $('.date-control').flatpickr({
                 altInput: true,

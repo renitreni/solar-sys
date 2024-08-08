@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\On;
 use Livewire\Component;
 

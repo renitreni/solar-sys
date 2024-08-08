@@ -17,7 +17,7 @@ class GetClientSelect extends Controller
             })->get()->map(function ($value) {
                 return [
                     'id' => $value->id,
-                    'text' => $value->name
+                    'text' => $value->name,
                 ];
             });
 

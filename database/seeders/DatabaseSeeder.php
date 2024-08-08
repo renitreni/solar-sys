@@ -11,7 +11,6 @@ use App\Models\Service;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use PhpParser\Builder\Property;
 
 class DatabaseSeeder extends Seeder
 {

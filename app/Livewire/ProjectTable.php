@@ -3,18 +3,14 @@
 namespace App\Livewire;
 
 use App\Models\Project;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
-use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use PowerComponents\LivewirePowerGrid\PowerGridFields;
 
 final class ProjectTable extends PowerGridComponent
 {
@@ -47,7 +43,7 @@ final class ProjectTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('client_name', fn($v) => $v->client->name)
+            ->add('client_name', fn ($v) => $v->client->name)
             ->add('project_number')
             ->add('property_type')
             ->add('property_owner_name')
@@ -70,10 +66,15 @@ final class ProjectTable extends PowerGridComponent
     {
         return [
             Column::action('Action'),
+
+            Column::make('Created at', 'created_at')
+                ->sortable()
+                ->searchable(),
+
             Column::make('Priority level', 'priority_level')
                 ->sortable()
                 ->searchable(),
-            Column::make('Id', 'id'),
+
             Column::make('Client', 'client_name'),
             Column::make('Project number', 'project_number')
                 ->sortable()
@@ -117,10 +118,6 @@ final class ProjectTable extends PowerGridComponent
             Column::make('Task total', 'task_total')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('Created at', 'created_at')
-                ->sortable()
-                ->searchable(),
         ];
     }
 
@@ -132,7 +129,7 @@ final class ProjectTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->js('alert(' . $rowId . ')');
+        $this->js('alert('.$rowId.')');
     }
 
     public function actions(Project $row): array
@@ -142,7 +139,7 @@ final class ProjectTable extends PowerGridComponent
                 ->slot('Edit')
                 ->id()
                 ->class('btn btn-xs btn-primary m-1')
-                ->dispatch('edit-project-form', ['rowId' => $row->id])
+                ->dispatch('edit-project-form', ['rowId' => $row->id]),
         ];
     }
 
