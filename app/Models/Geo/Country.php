@@ -53,7 +53,7 @@ class Country extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new DefaultCountryScope);
+        // static::addGlobalScope(new DefaultCountryScope);
     }
 
     /**
