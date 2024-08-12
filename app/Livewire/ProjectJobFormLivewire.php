@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Actions\SetPropertyAddressOnAllProjects;
 use App\Livewire\Abstract\FormComponent;
 use App\Models\Client;
 use App\Models\Geo\City;
@@ -10,6 +11,7 @@ use App\Models\Geo\Division;
 use App\Models\Project;
 use App\Models\ProjectJob;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
 
 class ProjectJobFormLivewire extends FormComponent
 {
@@ -117,6 +119,7 @@ class ProjectJobFormLivewire extends FormComponent
             $this->initModelData($this->project);
             $this->initModelData($this->project->projectJob);
             $this->clientName = $this->project->client->name;
+            $this->projectId = $this->project->id;
         }
 
         $this->country = Country::with(['divisions:id,name,country_id'])->first();
@@ -166,6 +169,15 @@ class ProjectJobFormLivewire extends FormComponent
         $this->cities = City::where('division_id', $stateModel->id)->orderBy('name')->get()->toArray();
     }
 
+    public function selectBind($values)
+    {
+        foreach ($values as $key => $value) {
+            $this->$key = $value;
+        }
+        
+        $this->dispatch('related-job-table', $this->projectId, $this->propertyAddress);
+    }
+
     public function update()
     {
         $this->validate([
@@ -178,12 +190,15 @@ class ProjectJobFormLivewire extends FormComponent
         ]);
 
         // Project Update
-        $project = Project::with('projectJob')->find($this->project['id']);
+
+        $project = Project::with('projectJob')->find($this->projectId);
         $project->client_id = $this->clientId;
         $project->project_number = $this->projectNumber;
         $project->property_type = $this->propertyType;
         $project->property_owner_name = $this->propertyOwnerName;
-        $project->property_address = $this->propertyAddress;
+
+        SetPropertyAddressOnAllProjects::handle($project->property_address, $this->propertyAddress);
+
         $project->property_state = $this->propertyState;
         $project->property_city = $this->propertyCity;
         $project->property_area_code = $this->propertyAreaCode;
@@ -196,6 +211,8 @@ class ProjectJobFormLivewire extends FormComponent
         $project->task_total = $this->taskTotal;
         $project->rfi_messages = $this->rfiMessages;
         $project->save();
+
+
 
         // Job Update
         $job = $project->projectJob;

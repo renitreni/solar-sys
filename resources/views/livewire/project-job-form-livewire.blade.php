@@ -1,5 +1,11 @@
 <x-form-view-component>
-    <x-slot:title>Create Job</x-slot:title>
+    <x-slot:title>
+        @if ($projectId)
+            Edit Job
+        @else
+            Create Job
+        @endif
+    </x-slot:title>
     <x-slot:actionButtons>
         <div>
             <a href="{{ route('project-job') }}" type="button" class="btn btn-sm btn-sm btn-black">Cancel</a>
@@ -32,11 +38,18 @@
                             @enderror
                         </div>
                         <div class="col-md-12">
-                            <x-select-options-component :lists='$propertyAddresses' keyword='propertyAddressKeyword'
-                                idKey='property_address' labelKey='property_address' inputId='propertyAddress'
-                                openSelect=true :inputName='$propertyAddress'>
-                                <x-slot:label>Property Address</x-slot:label>
-                            </x-select-options-component>
+                            @if ($projectId)
+                                <div class="form-group">
+                                    <label>Property Address</label>
+                                    <input type="text" class="form-control" wire:model='propertyAddress'>
+                                </div>
+                            @else
+                                <x-select-options-component :lists='$propertyAddresses' keyword='propertyAddressKeyword'
+                                    idKey='property_address' labelKey='property_address' inputId='propertyAddress'
+                                    openSelect=true :inputName='$propertyAddress'>
+                                    <x-slot:label>Property Address</x-slot:label>
+                                </x-select-options-component>
+                            @endif
                             @error('propertyAddress')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -141,6 +154,7 @@
                 <div class="card-title">Related Jobs</div>
             </div>
             <div class="card-body">
+                <livewire:components.related-job-livewire-components></livewire:components.related-job-livewire-components>
             </div>
         </div>
         {{-- ---------------------------- --}}
@@ -368,6 +382,11 @@
                 altFormat: "F j, Y",
                 dateFormat: "Y-m-d",
             });
+
+            @this.dispatch('related-job-table', {
+                'projectId': '{{ $projectId }}',
+                'propertyAddress': `{{ $propertyAddress }}`
+            })
         });
     </script>
 @endpush

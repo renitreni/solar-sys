@@ -14,7 +14,7 @@
     <div class="position-relative" @click.away="hide = true">
         <input id="input-{{ $inputId }}" class="form-control" x-model="inputName" x-on:click="hide = !hide">
         @if ($keyword || $lists)
-            <div class="position-absolute border bg-white z-3 w-100" x-show="!hide" wire:self>
+            <div class="position-absolute border bg-white z-3 w-100" x-show="!hide">
                 <div class="p-2">
                     <input class="form-control" wire:model.live='{{ Str::replace('$', '', $keyword) }}'
                         x-model='keyword'>
@@ -43,6 +43,7 @@
 </div>
 </div>
 <script>
+
     function dropdownSearch{{ $inputId }}() {
         return {
             hide: true,
@@ -52,8 +53,9 @@
                 this.hide = !this.hide;
                 this.keyword = '';
                 this.inputName = label;
-                this.$wire.$set('{{ $inputId }}', id)
-                this.$wire.$set('{{ $keyword }}', '')
+                @this.set('{{ $inputId }}', id)
+                @this.set('{{ $keyword }}', '')
+                @this.selectBind({'{{ $inputId }}':id, '{{ $keyword }}': ''});
             }
         }
     }
