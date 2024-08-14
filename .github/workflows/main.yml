@@ -9,14 +9,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:      
+    steps:
       - name: Generate SSH key
-          run: |
-            ssh-keygen -t rsa -b 4096 -C "github-action@your-repo" -f ~/.ssh/id_rsa -N ""
-            echo "Public Key:"
-            cat ~/.ssh/id_rsa.pub
-            echo "Private Key:"
-            cat ~/.ssh/id_rsa
+        run: |
+          ssh-keygen -t rsa -b 4096 -C "github-action@your-repo" -f ~/.ssh/id_rsa -N ""
+          echo "Public Key:"
+          cat ~/.ssh/id_rsa.pub
+          echo "Private Key:"
+          cat ~/.ssh/id_rsa
 
       - name: Print Public Key
         run: |
