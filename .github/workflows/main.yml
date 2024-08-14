@@ -1,0 +1,37 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:      
+    - name: Generate SSH key
+        run: |
+          ssh-keygen -t rsa -b 4096 -C "github-action@your-repo" -f ~/.ssh/id_rsa -N ""
+          echo "Public Key:"
+          cat ~/.ssh/id_rsa.pub
+          echo "Private Key:"
+          cat ~/.ssh/id_rsa
+
+    - name: Print Public Key
+      run: |
+        echo "Save the following public key to your VPS:"
+        cat ~/.ssh/id_rsa.pub
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Execute SSH Commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        script: |
+          cd /var/www/html/test.ms-xugee.com/solar-sys
+          git pull
