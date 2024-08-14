@@ -65,7 +65,7 @@ class ServiceLivewire extends Component
             'serviceName' => ['required', 'max:100'],
         ]);
 
-        $service = new Service();
+        $service = new Service;
         $service->service_name = $this->serviceName;
         $service->save();
 

@@ -3,22 +3,18 @@
 namespace App\Livewire;
 
 use App\Models\Project;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
-use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-/** @package App\Livewire */
 final class RelatedJobsTable extends PowerGridComponent
 {
     use WithExport;
@@ -29,7 +25,7 @@ final class RelatedJobsTable extends PowerGridComponent
 
     #[On('related-job-table')]
     public function setParameter($projectId, $propertyAddress)
-    {   
+    {
         $this->projectId = $projectId;
         $this->propertyAddress = Str::trim($propertyAddress);
     }
@@ -53,12 +49,11 @@ final class RelatedJobsTable extends PowerGridComponent
     {
         return [
             'client' => [
-                'name'
-            ]
+                'name',
+            ],
         ];
     }
 
-    /** @return PowerGridFields  */
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
@@ -113,7 +108,7 @@ final class RelatedJobsTable extends PowerGridComponent
 
             Column::make('Created at', 'created_at')
                 ->sortable()
-                ->searchable()
+                ->searchable(),
         ];
     }
 

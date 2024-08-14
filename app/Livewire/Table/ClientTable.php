@@ -35,7 +35,7 @@ final class ClientTable extends PowerGridComponent
     {
         return [
             Button::add('add-new')
-                ->slot('<i class="fas fa-plus"></i> Add New')
+                ->slot('<i class="fas fa-plus"></i> Add Client')
                 ->class('btn btn-sm btn-success')
                 ->dispatch('client-add', []),
         ];

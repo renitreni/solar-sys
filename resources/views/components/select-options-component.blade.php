@@ -43,7 +43,6 @@
 </div>
 </div>
 <script>
-
     function dropdownSearch{{ $inputId }}() {
         return {
             hide: true,
@@ -55,7 +54,10 @@
                 this.inputName = label;
                 @this.set('{{ $inputId }}', id)
                 @this.set('{{ $keyword }}', '')
-                @this.selectBind({'{{ $inputId }}':id, '{{ $keyword }}': ''});
+                @this.selectBind({
+                    '{{ $inputId }}': id,
+                    '{{ $keyword }}': ''
+                });
             }
         }
     }

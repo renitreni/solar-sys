@@ -11,7 +11,6 @@ use App\Models\Geo\Division;
 use App\Models\Project;
 use App\Models\ProjectJob;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Attributes\On;
 
 class ProjectJobFormLivewire extends FormComponent
 {
@@ -174,7 +173,7 @@ class ProjectJobFormLivewire extends FormComponent
         foreach ($values as $key => $value) {
             $this->$key = $value;
         }
-        
+
         $this->dispatch('related-job-table', $this->projectId, $this->propertyAddress);
     }
 
@@ -211,8 +210,6 @@ class ProjectJobFormLivewire extends FormComponent
         $project->task_total = $this->taskTotal;
         $project->rfi_messages = $this->rfiMessages;
         $project->save();
-
-
 
         // Job Update
         $job = $project->projectJob;

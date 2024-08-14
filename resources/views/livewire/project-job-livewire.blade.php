@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <a href="{{ route('project-job-form') }}" type="button" class="btn btn-sm btn-sm btn-success">
-                    <i class="fas fa-plus"></i> Project Intake Portal
+                    <i class="fas fa-plus"></i> Add Service Order
                 </a>
                 <div class="row">
                     <div class="col-md-12">

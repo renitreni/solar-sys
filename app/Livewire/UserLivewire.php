@@ -95,7 +95,7 @@ class UserLivewire extends Component
             'passwordConfirmation' => 'required',
         ]);
 
-        $user = new User();
+        $user = new User;
         $user->password = $this->password;
         $user->name = $this->name;
         $user->email = $this->email;

@@ -56,7 +56,7 @@ class JobStatusLivewire extends Component
             'jobStatusName' => ['required', 'max:100'],
         ]);
 
-        $jobStatus = new JobStatus();
+        $jobStatus = new JobStatus;
         $jobStatus->job_status_name = $this->jobStatusName;
         $jobStatus->save();
 
