@@ -33,5 +33,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            cd /var/www/html/test.ms-xugee.com/solar-sys
+            cd ${{ secrets.VPS_REPO_PATH }}
             git pull
