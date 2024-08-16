@@ -22,3 +22,7 @@ body {
 .fixed-div-distance {
     margin-top: 5rem !important;
 }
+
+.btn-check:checked+.btn {
+    color: white !important;
+}

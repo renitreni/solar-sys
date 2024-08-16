@@ -4,16 +4,25 @@ namespace App\Livewire;
 
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Service;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ProjectJobCreateLivewire extends Component
 {
+    use WithFileUploads;
+    
     public $clients;
     public $clientName;
     public $clientKeyword;
     public $propertyAddressKeyword;
     public $propertyAddresses;
     public $isNewProject = 'existing';
+    public $services;
+    
+    #[Validate(['documents.*' => 'image|max:1024'])]
+    public $documents;
 
     public $clientId;
     public $contactNo;
@@ -23,8 +32,9 @@ class ProjectJobCreateLivewire extends Component
 
     public function mount()
     {
+        $this->services = Service::all()->toArray();
         $this->clients = Client::query()->limit(10)->get()->toArray();
-        $this->propertyAddresses = Project::query()->limit(10)->get()->toArray();
+        $this->propertyAddresses = Project::query()->distinct('property_address')->limit(10)->get()->toArray();
     }
 
     public function render()
@@ -47,7 +57,7 @@ class ProjectJobCreateLivewire extends Component
 
     public function updatedPropertyAddressKeyword($value)
     {
-        $this->propertyAddresses = Project::search($value)->get()->toArray();
+        $this->propertyAddresses = Project::search($value)->get()->unique('property_address')->toArray();
     }
 
     private function clientIdChanged($key, $value)
@@ -65,6 +75,12 @@ class ProjectJobCreateLivewire extends Component
 
     public function updatedIsNewProject()
     {
+        $this->propertyAddress = null;
+        $this->propertyAddressKeyword = null;
+    }
 
+    public function removeTempFile($fileIndex)
+    {
+        array_splice($this->documents, $fileIndex, 1);
     }
 }

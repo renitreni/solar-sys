@@ -9,10 +9,30 @@
     'livewireId' => 0,
 ])
 
-<div class="form-group" x-data="dropdownSearch{{ $inputId }}" hidden wire:ignore.self>
+<div class="form-group custom-select-component" x-data="{
+    hide: true,
+    keyword: '',
+    inputName: `{{ $inputName }}`,
+    actionSelect(id, label) {
+        this.hide = !this.hide;
+        this.keyword = '';
+        this.inputName = label;
+        @this.set('{{ $inputId }}', id)
+        @this.set('{{ $keyword }}', '')
+        @this.selectBind({ '{{ $inputId }}': id, '{{ $keyword }}': '' });
+    }
+}" x-init="() => {
+    // Select all elements with the 'hidden' attribute
+    let hiddenElements{{ $inputId }} = document.querySelectorAll('[hidden].custom-select-component');
+
+    // Iterate over the NodeList and remove the 'hidden' attribute from each element
+    hiddenElements{{ $inputId }}.forEach(element => {
+        element.removeAttribute('hidden');
+    });
+}" hidden wire:ignore.self>
     <label>{{ $label }}</label>
     <div class="position-relative" @click.away="hide = true">
-        <input id="input-{{ $inputId }}" class="form-control" x-model="inputName" x-on:click="hide = !hide">
+        <input id="input-{{ $inputId }}" class="form-control" x-model="inputName" x-on:click="hide = !hide" readonly>
         @if ($keyword || $lists)
             <div class="position-absolute border bg-white z-3 w-100" x-show="!hide">
                 <div class="p-2">
@@ -66,15 +86,5 @@
 
     inputElement{{ $inputId }}.addEventListener('focus', function(event) {
         event.target.blur();
-    });
-
-    window.addEventListener('load', function() {
-        // Select all elements with the 'hidden' attribute
-        let hiddenElements{{ $inputId }} = document.querySelectorAll('[hidden]');
-
-        // Iterate over the NodeList and remove the 'hidden' attribute from each element
-        hiddenElements{{ $inputId }}.forEach(element => {
-            element.removeAttribute('hidden');
-        });
     });
 </script>

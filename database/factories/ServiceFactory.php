@@ -17,7 +17,7 @@ class ServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'service_name' => fake()->word(),
+            'service_name' => fake()->jobTitle(),
         ];
     }
 }
