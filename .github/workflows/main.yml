@@ -24,4 +24,4 @@ jobs:
             git pull
             composer install
             php artisan migrate:fresh --seed
-            php artisan geoname:sync
+            chown -R www-data:www-data ${{ secrets.VPS_REPO_PATH }}/storage/logs

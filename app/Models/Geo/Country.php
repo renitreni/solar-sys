@@ -42,6 +42,8 @@ class Country extends Model
 {
     use HasTranslations;
 
+    public $connection = 'sqlite';
+
     /**
      * Attributes that are translatable.
      *
@@ -53,7 +55,7 @@ class Country extends Model
 
     protected static function booted()
     {
-        // static::addGlobalScope(new DefaultCountryScope);
+        static::addGlobalScope(new DefaultCountryScope);
     }
 
     /**
