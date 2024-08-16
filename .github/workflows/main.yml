@@ -10,19 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Generate SSH key
-        run: |
-          ssh-keygen -t rsa -b 4096 -C "github-action@your-repo" -f ~/.ssh/id_rsa -N ""
-          echo "Public Key:"
-          cat ~/.ssh/id_rsa.pub
-          echo "Private Key:"
-          cat ~/.ssh/id_rsa
-
-      - name: Print Public Key
-        run: |
-          echo "Save the following public key to your VPS:"
-          cat ~/.ssh/id_rsa.pub
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -33,7 +20,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            cd /var/www/html/test.ms-xugee.com/solar-sys
+            cd ${{ secrets.VPS_REPO_PATH }}
             git pull
             composer install
             php artisan migrate:fresh --seed
