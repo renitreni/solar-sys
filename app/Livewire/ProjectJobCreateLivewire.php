@@ -21,7 +21,7 @@ class ProjectJobCreateLivewire extends Component
     public $isNewProject = 'existing';
     public $services;
     
-    #[Validate(['documents.*' => 'image|max:1024'])]
+    #[Validate(['documents.*' => 'max:100000'])]
     public $documents;
 
     public $clientId;
