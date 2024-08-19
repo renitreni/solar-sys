@@ -34,10 +34,10 @@
                                     Client</button>
                             </div>
                         </div>
-                        <livewire:components.client-form-livewire-component></livewire:components.client-form-livewire-component>
                         @error('clientId')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        <livewire:components.client-form-livewire-component></livewire:components.client-form-livewire-component>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -53,6 +53,15 @@
                             <label>Client E-mail</label>
                             <input type="text" class="form-control" wire:model.live='clientEmail' disabled>
                             @error('clientEmail')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Project Number</label>
+                            <input type="text" class="form-control" wire:model.live='projectNumber'>
+                            @error('projectNumber')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

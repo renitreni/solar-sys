@@ -10,12 +10,13 @@ class Document extends Model
     use HasFactory;
 
     public $fillable = [
-        'path',
-        'type',
-        'size',
+        'document_path',
+        'document_type',
+        'document_size',
+        'document_url',
     ];
 
-    public function commentable()
+    public function documentable()
     {
         return $this->morphTo();
     }

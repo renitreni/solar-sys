@@ -50,4 +50,9 @@ class Project extends Model
     {
         return $this->hasOne(ProjectJob::class);
     }
+
+    public function documents()
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
 }

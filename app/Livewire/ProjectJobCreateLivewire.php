@@ -5,22 +5,26 @@ namespace App\Livewire;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Service;
+use Firebase\Storage\ServiceStorage;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
 use Livewire\WithFileUploads;
 
 class ProjectJobCreateLivewire extends Component
 {
     use WithFileUploads;
-    
+
     public $clients;
     public $clientName;
     public $clientKeyword;
+    public $projectNumber;
     public $propertyAddressKeyword;
     public $propertyAddresses;
     public $isNewProject = 'existing';
     public $services;
-    
+    public $firebaseStorage;
+
     #[Validate(['documents.*' => 'max:100000'])]
     public $documents;
 
@@ -62,11 +66,11 @@ class ProjectJobCreateLivewire extends Component
 
     private function clientIdChanged($key, $value)
     {
-        if($key != 'clientId') {
+        if ($key != 'clientId') {
             return false;
         }
 
-        if($this->$key != $value) {
+        if ($this->$key != $value) {
             $client = Client::find($value);
             $this->clientContactNo = $client->contact_no;
             $this->clientEmail = $client->email;
@@ -82,5 +86,37 @@ class ProjectJobCreateLivewire extends Component
     public function removeTempFile($fileIndex)
     {
         array_splice($this->documents, $fileIndex, 1);
+    }
+
+    public function store()
+    {
+        $this->validate([
+            'clientId' => 'required',
+            'projectNumber' => 'required',
+        ]);
+
+        $project = new Project();
+        $project->client_id = $this->clientId;
+        $project->project_number = $this->projectNumber;
+        $project->save();
+
+        $firebaseStorage = new ServiceStorage();
+        foreach ($this->documents as $document) {
+            $item = $firebaseStorage->upload($document)->getItem();
+            $signedUrl = $item->signedUrl(now()->addMonth());
+            $info = $item->info();
+            $project->documents()->create([
+                'document_path' => $item->name(),
+                'document_type' => $info['contentType'],
+                'document_size' => $info['size'],
+                'document_url' => $signedUrl,
+            ]);
+        }
+        $this->clearTempFiles();
+    }
+
+    public function clearTempFiles()
+    {
+        //
     }
 }

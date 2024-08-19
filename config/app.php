@@ -126,4 +126,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'firebase' => ['credentials' => env('FIREBASE_CREDENTIALS')]
 ];

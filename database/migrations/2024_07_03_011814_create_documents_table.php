@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('document_path'); // 'path',
             $table->string('document_type'); // 'type',
             $table->string('document_size'); // 'size'
+            $table->longText('document_url'); // 'size'
             $table->morphs('documentable');
             $table->timestamps();
         });
