@@ -17,7 +17,7 @@ class ClientFormLivewireComponent extends Component
     public $contact_no;
 
     public $clientId;
-    
+
     public function render()
     {
         return view('livewire.components.client-form-livewire-component');

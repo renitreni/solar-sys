@@ -29,7 +29,7 @@ class Division extends Model
     use HasTranslations;
 
     public $connection = 'sqlite';
-    
+
     /**
      * Attributes that are translatable.
      *

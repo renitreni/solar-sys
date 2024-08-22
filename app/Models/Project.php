@@ -34,6 +34,7 @@ class Project extends Model
         'task_total',
         // RFI
         'rfi_messages',
+        'created_by',
     ];
 
     public function toSearchableArray(): array

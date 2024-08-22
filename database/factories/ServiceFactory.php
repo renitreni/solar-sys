@@ -18,6 +18,7 @@ class ServiceFactory extends Factory
     {
         return [
             'service_name' => fake()->jobTitle(),
+            'price' => fake()->numberBetween(12, 200),
         ];
     }
 }

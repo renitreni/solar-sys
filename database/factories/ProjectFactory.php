@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -34,6 +35,7 @@ class ProjectFactory extends Factory
             'commercial_job_price' => 0,
             'task_total' => 0,
             'rfi_messages' => fake()->paragraph(8),
+            'created_by' => User::inRandomOrder()->first()->id,
         ];
     }
 }

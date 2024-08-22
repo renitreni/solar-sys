@@ -24,7 +24,7 @@ use Nevadskiy\Geonames\Translations\HasTranslations;
 class Continent extends Model
 {
     use HasTranslations;
-    
+
     public $connection = 'sqlite';
 
     /**

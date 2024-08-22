@@ -10,7 +10,11 @@
             <button type="button" wire:click='store' class="btn btn-sm btn-primary">Save</button>
         </div>
     </x-slot:actionButtons>
-
+    <div wire:loading wire:target="store"> 
+        <div class="loading-state">
+            <div class="loading"></div>
+          </div>
+    </div>
     <div class="d-flex flex-column">
         {{-- ====================== --}}
         <div class="card">
@@ -124,7 +128,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">
-                    User Info
+                    Created By
                 </div>
             </div>
             <div class="card-body">
@@ -155,10 +159,10 @@
                 <div class="row mx-3">
                     @foreach ($services as $service)
                         <div class="col-md-3 p-2">
-                            <input type="checkbox" value="{{ $service['service_name'] }}" class="btn-check"
-                                id="btn{{ $service['service_name'] }}1" autocomplete="off">
+                            <input type="checkbox" class="btn-check btn-check-services"
+                                id="btn-services{{ $service['id'] }}" autocomplete="off" wire:click='selectService({{ $service['id'] }})'>
                             <label class="btn btn-outline-info w-100"
-                                for="btn{{ $service['service_name'] }}1">{{ $service['service_name'] }}</label>
+                                for="btn-services{{ $service['id'] }}">{{ $service['service_name'] }}</label>
                         </div>
                     @endforeach
                 </div>
@@ -166,7 +170,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Additional Information</label>
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" wire:model='additionalInfo'></textarea>
                         </div>
                     </div>
                 </div>
@@ -193,8 +197,8 @@
                             <div x-show="uploading">
                                 <progress max="100" x-bind:value="progress"></progress>
                             </div>
-                            @error('documents.*')
-                                <span class="error">{{ $message }}</span>
+                            @error('documents')
+                                <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>

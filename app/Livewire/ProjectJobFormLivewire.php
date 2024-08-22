@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Actions\SetPropertyAddressOnAllProjects;
 use App\Livewire\Abstract\FormComponent;
 use App\Models\Client;
+use App\Models\Document;
 use App\Models\Geo\City;
 use App\Models\Geo\Country;
 use App\Models\Geo\Division;
@@ -110,6 +111,8 @@ class ProjectJobFormLivewire extends FormComponent
 
     public $additionalInfo;
 
+    public $documents;
+
     public function mount($id = null)
     {
         $this->project = Project::with('projectJob', 'client')->find($id);
@@ -119,6 +122,7 @@ class ProjectJobFormLivewire extends FormComponent
             $this->initModelData($this->project->projectJob);
             $this->clientName = $this->project->client->name;
             $this->projectId = $this->project->id;
+            $this->documents = $this->project->documents;
         }
 
         $this->country = Country::with(['divisions:id,name,country_id'])->first();
