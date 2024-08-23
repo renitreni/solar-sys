@@ -54,7 +54,6 @@ final class ProjectTable extends PowerGridComponent
             ->add('wet_stamp_mailing_address')
             ->add('wet_stamp_count')
             ->add('shipping_number')
-            ->add('priority_level')
             ->add('task_price_total')
             ->add('commercial_job_price')
             ->add('task_total')
@@ -68,10 +67,6 @@ final class ProjectTable extends PowerGridComponent
             Column::action('Action'),
 
             Column::make('Created at', 'created_at')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Priority level', 'priority_level')
                 ->sortable()
                 ->searchable(),
 

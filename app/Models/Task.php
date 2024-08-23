@@ -13,7 +13,7 @@ class Task extends Model
     protected $fillable = [
         'service_id',
         'project_id',
-        'assigned_to',
+        'price',
         'other_description',
         'is_new_task',
         'is_new_task_override',
@@ -28,4 +28,19 @@ class Task extends Model
         'date_completed',
         'date_cancelled',
     ];
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
 }

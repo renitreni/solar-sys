@@ -14,9 +14,9 @@ body {
     z-index: 10 !important;
     position: fixed !important;
     padding: 20px !important;
-    margin-top: 5rem !important;
+    margin-top: 50px;
     background-color: white !important;
-    width: 83% !important;
+    width: 81.2vw !important;
 }
 
 .fixed-div-distance {

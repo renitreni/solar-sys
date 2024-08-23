@@ -14,6 +14,8 @@ class Document extends Model
         'document_type',
         'document_size',
         'document_url',
+        'bucket_name',
+        'object_name'
     ];
 
     public function documentable()

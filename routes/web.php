@@ -10,6 +10,7 @@ use App\Livewire\DashboardLivewire;
 use App\Livewire\JobStatusLivewire;
 use App\Livewire\LoginLivewire;
 use App\Livewire\ProjectJobCreateLivewire;
+use App\Livewire\ProjectJobFileLivewire;
 use App\Livewire\ProjectJobFormLivewire;
 use App\Livewire\ProjectJobLivewire;
 use App\Livewire\ServiceLivewire;
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/project-job', ProjectJobLivewire::class)->name('project-job');
         Route::get('/project-job-form/create', ProjectJobCreateLivewire::class)->name('project-job-form');
         Route::get('/project-job-form/edit/{id}', ProjectJobFormLivewire::class)->name('project-job-form.edit');
+        Route::get('/project-job-file/{id}', ProjectJobFileLivewire::class)->name('project-job-file');
     });
 
     Route::prefix('reference')->group(function () {

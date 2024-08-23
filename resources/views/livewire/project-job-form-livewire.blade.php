@@ -1,21 +1,16 @@
 <x-form-view-component>
     <x-slot:title>
-        @if ($projectId)
-            Edit Job
-        @else
-            Create Job
-        @endif
+        Edit Job
     </x-slot:title>
     <x-slot:actionButtons>
         <div>
-            <a href="{{ route('project-job') }}" type="button" class="btn btn-sm btn-sm btn-black">Cancel</a>
+            <a href="{{ route('project-job-form.edit', ['id' => $this->projectId]) }}" type="button" class="btn btn-sm btn-sm btn-black">Cancel</a>
         </div>
         <div>
-            @if ($projectId)
-                <button type="button" wire:click='update' class="btn btn-sm btn-primary">Update</button>
-            @else
-                <button type="button" wire:click='store' class="btn btn-sm btn-primary">Save</button>
-            @endif
+            <button type="button" wire:click='update' class="btn btn-sm btn-primary">Update</button>
+        </div>
+        <div>
+            <a href="{{ route('project-job-file', ['id' => $this->projectId ]) }}" target="_blank" class="btn btn-sm btn-primary">Project Files</a>
         </div>
     </x-slot:actionButtons>
 
@@ -27,88 +22,61 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 row">
-                        <div class="col-md-12">
-                            <x-select-options-component :lists='$clients' keyword='clientKeyword' idKey='id'
-                                labelKey='name' inputId='clientId' :inputName='$clientName' :livewireId='$this->__id'>
-                                <x-slot:label>Client</x-slot:label>
-                            </x-select-options-component>
-                            @error('clientId')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12">
-                            @if ($projectId)
-                                <div class="form-group">
-                                    <label>Property Address</label>
-                                    <input type="text" class="form-control" wire:model='propertyAddress'>
-                                </div>
-                            @else
-                                <x-select-options-component :lists='$propertyAddresses' keyword='propertyAddressKeyword'
-                                    idKey='property_address' labelKey='property_address' inputId='propertyAddress'
-                                    openSelect=true :inputName='$propertyAddress'>
-                                    <x-slot:label>Property Address</x-slot:label>
-                                </x-select-options-component>
-                            @endif
-                            @error('propertyAddress')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Project Number</label>
-                                <input type="text" class="form-control" wire:model='projectNumber'>
-                            </div>
-                            @error('projectNumber')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Priority Level</label>
-                                <select class="form-select" wire:model='priorityLevel'>
-                                    <option value="">-- Select Option --</option>
-                                    <option value="high">High</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="low">Low</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Property Type</label>
-                                <select class="form-select" wire:model='propertyType'>
-                                    <option value="">-- Select Option --</option>
-                                    <option value="residential">Residential</option>
-                                    <option value="commercial">Commercial</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Property Owner Name</label>
-                                <input type="text" class="form-control" wire:model='propertyOwnerName'>
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                        <x-select-options-component :lists='$clients' keyword='clientKeyword' idKey='id'
+                            labelKey='name' inputId='clientId' :inputName='$clientName' :livewireId='$this->__id'>
+                            <x-slot:label>Client</x-slot:label>
+                        </x-select-options-component>
+                        @error('clientId')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-md-6">
-                        <div class="col-md-12 shadow-sm h-100">
-                            Map here.
+                        <div class="form-group">
+                            <label>Project Number</label>
+                            <input type="text" class="form-control" wire:model='projectNumber'>
+                        </div>
+                        @error('projectNumber')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-4">
+                        @if ($projectId)
+                            <div class="form-group">
+                                <label>Property Address</label>
+                                <input type="text" class="form-control" wire:model='propertyAddress'>
+                            </div>
+                        @else
+                            <x-select-options-component :lists='$propertyAddresses' keyword='propertyAddressKeyword'
+                                idKey='property_address' labelKey='property_address' inputId='propertyAddress'
+                                openSelect=true :inputName='$propertyAddress'>
+                                <x-slot:label>Property Address</x-slot:label>
+                            </x-select-options-component>
+                        @endif
+                        @error('propertyAddress')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Property Owner Name</label>
+                            <input type="text" class="form-control" wire:model='propertyOwnerName'>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Property Area Code</label>
-                            <input type="text" class="form-control" wire:model='propertyAreaCode'>
-                            @error('propertyAreaCode')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <label>Property Type</label>
+                            <select class="form-control form-select" wire:model='propertyType'>
+                                <option value="">-- Select Option --</option>
+                                <option value="residential">Residential</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Property State</label>
-                            <select class="form-select" wire:model.live='propertyState'>
+                            <select class="form-select form-control" wire:model.live='propertyState'>
                                 <option value="">-- Select Option --</option>
                                 @foreach ($states as $division)
                                     <option value="{{ $division['name'] }}">{{ $division['name'] }}</option>
@@ -122,13 +90,22 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Property City</label>
-                            <select class="form-select" wire:model.live="propertyCity">
+                            <select class="form-select form-control" wire:model.live="propertyCity">
                                 <option value="">-- Select Option --</option>
                                 @foreach ($cities ?? [] as $city)
                                     <option value="{{ $city['name'] }}">{{ $city['name'] }}</option>
                                 @endforeach
                             </select>
                             @error('propertyCity')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Property Area Code</label>
+                            <input type="text" class="form-control" wire:model='propertyAreaCode'>
+                            @error('propertyAreaCode')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -179,23 +156,16 @@
                     <div class="col-md-6"></div>
                     <div class="col-md-auto">
                         <div class="form-group d-flex flex-column">
-                            <label class="form-label">In Review</label>
-                            <div class="selectgroup selectgroup-secondary selectgroup-pills">
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="icon-input" value="1" wire:model='inReview'
-                                        class="selectgroup-input">
-                                    <span class="selectgroup-button selectgroup-button-icon"><i
-                                            class="fa fa-check"></i></span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="icon-input" value="0" wire:model='inReview'
-                                        class="selectgroup-input" checked="">
-                                    <span class="selectgroup-button selectgroup-button-icon"><i
-                                            class="fa fa-times"></i></span>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault"
+                                    wire:model='inReview'>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Please check this if job is currently in-review.
                                 </label>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12"></div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Job Request #</label>
@@ -216,21 +186,6 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group" wire:ignore>
-                            <label>Estimated Days to Complete</label>
-                            <input type="text" class="form-control date-control" wire:model='estimatedCompletion'
-                                readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group" wire:ignore>
-                            <label>Estimated Days to Complete Override</label>
-                            <input type="text" class="form-control date-control"
-                                wire:model='estimatedCompletionOverride' readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6"></div>
-                    <div class="col-md-3">
-                        <div class="form-group" wire:ignore>
                             <label>Date Received Formula</label>
                             <input type="text" class="form-control date-control" wire:model='dateReceivedFormula'
                                 readonly>
@@ -242,7 +197,6 @@
                             <input type="text" class="form-control date-control" wire:model='dateDue' readonly>
                         </div>
                     </div>
-                    <div class="col-md-6"></div>
                     <div class="col-md-3">
                         <div class="form-group" wire:ignore>
                             <label>Date Completed</label>
@@ -263,10 +217,9 @@
                             <input type="text" class="form-control date-control" wire:model='dateSent' readonly>
                         </div>
                     </div>
-                    <div class="col-md-3"></div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Client Contact</label>
+                            <label>Client Name</label>
                             <input type="text" class="form-control" wire:model='clientName'>
                         </div>
                     </div>
@@ -301,6 +254,31 @@
         {{-- ---------------------------- --}}
         <div class="card">
             <div class="card-header">
+                <div class="card-title">Tasks</div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <livewire:task-table/>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Task Price Total</label>
+                        <input type="number" class="form-control" wire:model='taskPriceTotal'>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Commercial Job Price</label>
+                        <input type="number" class="form-control" wire:model='commercialJobPrice'>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Total</label>
+                        <input type="number" class="form-control" wire:model='taskTotal'>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- ---------------------------- --}}
+        <div class="card">
+            <div class="card-header">
                 <div class="card-title">RFI (Request for Information)</div>
             </div>
             <div class="card-body">
@@ -322,57 +300,6 @@
             </div>
             <div class="card-body">
 
-            </div>
-        </div>
-        {{-- ---------------------------- --}}
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Documents</div>
-            </div>
-            <div class="card-body">
-
-                @foreach ($documents ?? [] as $key => $document)
-                    <div class="col-md-2">
-                        <div class="card w-100">
-                            <div class="card-body">
-                                <h5 class="card-title"></h5>
-                                <p class="card-text">{{ explode('-#-', $document->document_path)[1] }}</p>
-                                <div class="d-flex w-100 flex-row gap-2">
-                                    <a href="{{ $document->document_url }}" target="_blank"
-                                        class="btn btn-primary w-100">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    {{-- <button type="button" class="btn btn-danger w-100"
-                                        wire:click='removeTempFile({{ $key }})'>
-                                        <i class="fas fa-trash"></i>
-                                    </button> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        {{-- ---------------------------- --}}
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Tasks</div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">Task Price Total</label>
-                        <input type="number" class="form-control" wire:model='taskPriceTotal'>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Commercial Job Price</label>
-                        <input type="number" class="form-control" wire:model='commercialJobPrice'>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Total</label>
-                        <input type="number" class="form-control" wire:model='taskTotal'>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
