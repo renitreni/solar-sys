@@ -22,6 +22,7 @@ jobs:
           script: |
             cd ${{ secrets.VPS_REPO_PATH }}
             git pull
+            rm -rf ./vendor/
             composer install
             php artisan migrate:fresh --seed
             chown -R www-data:www-data ${{ secrets.VPS_REPO_PATH }}/storage/logs
