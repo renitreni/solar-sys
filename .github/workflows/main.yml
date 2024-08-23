@@ -24,5 +24,6 @@ jobs:
             git pull
             rm -rf ./vendor/
             composer install
+            composer dump-autoload
             php artisan migrate:fresh --seed
             chown -R www-data:www-data ${{ secrets.VPS_REPO_PATH }}/storage/logs
