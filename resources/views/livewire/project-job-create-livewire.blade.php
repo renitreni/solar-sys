@@ -57,9 +57,10 @@
                         </div>
                         <div class="col-md-3 p-0" x-data="{}">
                             <div class="d-flex flex-column" style="margin-top: 35%;">
-                                <button type="button" class="btn text-nowrap btn-primary"
-                                    @click="$dispatch('client-add')">Add
-                                    Client</button>
+                                <button type="button" class="btn text-nowrap btn-primary px-0"
+                                    @click="$dispatch('client-add')">
+                                    Add Client
+                                </button>
                             </div>
                         </div>
                         @error('clientId')
