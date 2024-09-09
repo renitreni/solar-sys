@@ -22,4 +22,9 @@ class Client extends Model
     {
         return ['name' => $this->name];
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

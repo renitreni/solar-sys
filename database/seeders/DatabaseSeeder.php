@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Client;
+use App\Models\Company;
 use App\Models\GlobalParameter;
 use App\Models\JobStatus;
 use App\Models\Project;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        Company::factory(10)->create();
         User::factory(40)->create();
         Client::factory(20)->create();
         JobStatus::factory(20)->create();
