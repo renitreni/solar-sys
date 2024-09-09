@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +21,6 @@ class ClientFactory extends Factory
             'email' => fake()->safeEmail(),
             'address' => fake()->address(),
             'contact_no' => fake()->phoneNumber(),
-            'company_id' => Company::query()->inRandomOrder()->first()->id
         ];
     }
 }

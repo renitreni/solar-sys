@@ -33,7 +33,8 @@
                         View Details</button>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" wire:click='storeCreate'>Save
                         & Create New</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" wire:click='storeExit'>Save & Exit</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" wire:click='storeExit'>Save &
+                        Exit</button>
                 </div>
             </div>
         </div>
@@ -48,15 +49,25 @@
             </div>
             <div class="card-body">
                 <div class="row">
+                    <div class="col-md-4">
+                        <x-select-options-component :lists='$companies' keyword='companyKeyword' idKey='id'
+                            labelKey='company_name' inputId='companyId' :inputName='$companyName' :livewireId='$this->__id'>
+                            <x-slot:label>Company</x-slot:label>
+                        </x-select-options-component>
+                        @error('companyId')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                     <div class="row col-md-4">
-                        <div class="col-md-9 pe-0">
+                        <div class="col-md-9 px-0">
                             <x-select-options-component :lists='$clients' keyword='clientKeyword' idKey='id'
                                 labelKey='name' inputId='clientId' :inputName='$clientName' :livewireId='$this->__id'>
                                 <x-slot:label>Client Name</x-slot:label>
                             </x-select-options-component>
                         </div>
-                        <div class="col-md-3 p-0" x-data="{}">
-                            <div class="d-flex flex-column" style="margin-top: 35%;">
+                        <div class="col-md-3 px-0" x-data="{}">
+                            <div class="form-group d-flex flex-column px-0">
+                                <label style="opacity: 0">a</label>
                                 <button type="button" class="btn text-nowrap btn-primary px-0"
                                     @click="$dispatch('client-add')">
                                     Add Client
@@ -67,15 +78,6 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <livewire:components.client-form-livewire-component></livewire:components.client-form-livewire-component>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Client Contact</label>
-                            <input type="text" class="form-control" wire:model.live='clientContactNo' disabled>
-                            @error('clientContactNo')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
@@ -119,6 +121,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12"></div>
                     <div class="col-md-12">
                         @if ($isNewProject == 'new')
                             <div class="form-group">
@@ -137,7 +140,17 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Property Type</label>
+                            <select class="form-control form-select" wire:model='propertyType'>
+                                <option value="">-- Select Option --</option>
+                                <option value="residential">Residential</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Project Number</label>
                             <input type="text" class="form-control" wire:model.live='projectNumber'>
@@ -146,7 +159,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Property Owner Name</label>
                             <input type="text" class="form-control" wire:model.live='propertyOwnerName'>
@@ -155,6 +168,47 @@
                             @enderror
                         </div>
                     </div>
+                    @if ($isNewProject == 'new')
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Property State</label>
+                                <select class="form-select form-control" wire:model.live='propertyState'>
+                                    <option value="">-- Select Option --</option>
+                                    @foreach ($states as $division)
+                                        <option value="{{ $division['name'] }}">{{ $division['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                @error('propertyState')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Property City</label>
+                                <select class="form-select form-control" wire:model.defer="propertyCity">
+                                    <option value="">-- Select Option --</option>
+                                    @foreach ($cities ?? [] as $city)
+                                        <option value="{{ $city['name'] }}"
+                                            @if ($this->propertyCity == $city['name']) selected @endif>{{ $city['name'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('propertyCity')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Property Area Code</label>
+                                <input type="text" class="form-control" wire:model='propertyAreaCode'>
+                                @error('propertyAreaCode')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

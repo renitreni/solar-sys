@@ -3,6 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Client;
+use App\Models\Company;
+use App\Models\Geo\City;
+use App\Models\Geo\Country;
+use App\Models\Geo\Division;
 use App\Models\Project;
 use App\Models\ProjectJob;
 use App\Models\Service;
@@ -19,6 +23,26 @@ class ProjectJobCreateLivewire extends Component
 {
     use LivewireAlert;
     use WithFileUploads;
+
+    public $country;
+
+    public $states;
+
+    public $cities;
+
+    public $propertyState;
+
+    public $propertyCity;
+
+    public $propertyAreaCode;
+
+    public $companies;
+
+    public $companyName;
+
+    public $companyId;
+
+    public $companyKeyword;
 
     public $clients;
 
@@ -59,11 +83,16 @@ class ProjectJobCreateLivewire extends Component
 
     public $propertyOwnerName;
 
+    public $propertyType;
+
     public function mount()
     {
         $this->services = Service::all()->toArray();
         $this->clients = Client::query()->limit(10)->get()->toArray();
+        $this->companies = Company::query()->limit(10)->get()->toArray();
         $this->propertyAddresses = Project::query()->distinct('property_address')->limit(10)->get()->toArray();
+        $this->country = Country::with(['divisions:id,name,country_id'])->first();
+        $this->states = $this->country->divisions->sortBy('name')->toArray();
     }
 
     public function render()
@@ -85,9 +114,21 @@ class ProjectJobCreateLivewire extends Component
         $this->clients = Client::search($value)->get()->toArray();
     }
 
+    public function updatedCompanyKeyword($value)
+    {
+        $this->companies = Company::search($value)->get()->toArray();
+    }
+
     public function updatedPropertyAddressKeyword($value)
     {
         $this->propertyAddresses = Project::search($value)->get()->unique('property_address')->toArray();
+    }
+
+    public function updatedPropertyState($value)
+    {
+        $this->propertyCity = null;
+        $stateModel = Division::where('name', $value)->first();
+        $this->cities = City::where('division_id', $stateModel->id)->get()->toArray();
     }
 
     private function propertyAddressChanged($key, $value)
@@ -100,6 +141,10 @@ class ProjectJobCreateLivewire extends Component
             $this->relatedProject = Project::where('property_address', $value)->orderBy('created_at')->first();
             $this->projectNumber = $this->relatedProject->project_number;
             $this->propertyOwnerName = $this->relatedProject->property_owner_name;
+            $this->propertyType = $this->relatedProject->property_type;
+            $this->propertyState = $this->relatedProject->property_state;
+            $this->updatedPropertyState($this->propertyState);
+            $this->propertyCity = $this->relatedProject->property_city;
         }
     }
 
@@ -118,10 +163,12 @@ class ProjectJobCreateLivewire extends Component
 
     public function updatedIsNewProject()
     {
-        $this->propertyAddress = null;
         $this->propertyAddressKeyword = null;
-        $this->projectNumber = null;
         $this->propertyOwnerName = null;
+        $this->propertyAddress = null;
+        $this->projectNumber = null;
+        $this->propertyState = null;
+        $this->propertyCity = null;
     }
 
     public function removeTempFile($fileIndex)
@@ -162,7 +209,6 @@ class ProjectJobCreateLivewire extends Component
         $this->validate([
             'clientId' => 'required',
             'projectNumber' => 'required',
-            'documents' => 'required',
             'propertyAddress' => 'required',
         ]);
 
@@ -171,12 +217,13 @@ class ProjectJobCreateLivewire extends Component
         $project->client_id = $this->clientId;
         $project->project_number = $this->projectNumber;
         $project->property_address = $this->propertyAddress;
+        $project->company_id = $this->companyId;
         $project->created_by = Auth::id();
+        $project->property_type = $this->propertyType;
 
         // If exists, get related project
         if ($this->isNewProject == 'existing') {
             $project->property_owner_name = $this->relatedProject->property_owner_name;
-            $project->property_type = $this->relatedProject->property_type;
             $project->property_state = $this->relatedProject->property_state;
             $project->property_city = $this->relatedProject->property_city;
             $project->property_area_code = $this->relatedProject->property_area_code;
@@ -204,11 +251,11 @@ class ProjectJobCreateLivewire extends Component
 
         // Upload files
         $firebaseStorage = new ServiceStorage;
-        foreach ($this->documents as $document) {
+        foreach ($this->documents ?? [] as $document) {
             $item = $firebaseStorage->upload($document)->getItem();
             $signedUrl = $item->signedUrl(now()->addMonth());
             $info = $item->info();
-            
+
             $project->documents()->create([
                 'document_path' => $item->name(),
                 'document_type' => $info['contentType'],
@@ -217,7 +264,7 @@ class ProjectJobCreateLivewire extends Component
                 'bucket_name' => $info['bucket'],
                 'object_name' => $info['name'],
             ]);
-            Storage::delete('livewire-tmp/' . $document->getFilename());
+            Storage::delete('livewire-tmp/'.$document->getFilename());
             $this->documents = null;
         }
 

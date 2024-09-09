@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Company extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, Searchable, SoftDeletes;
 
     protected $fillable = [
-        'company_name'
+        'company_name',
     ];
 
-    public function clients()
+    public function toSearchableArray(): array
     {
-        return $this->hasMany(Client::class);
+        return ['company_name' => $this->company_name];
     }
 }

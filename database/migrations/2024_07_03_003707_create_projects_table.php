@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Client;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->string('commercial_job_price')->nullable(); // 'commercial_job_price',
             $table->string('task_total')->nullable(); // 'total',
             $table->text('rfi_messages')->nullable(); // 'rfi_messages',
+            $table->foreignIdFor(Company::class);
             $table->foreignIdFor(User::class, 'created_by'); // 'created_by',
             $table->softDeletes();
             $table->timestamps();

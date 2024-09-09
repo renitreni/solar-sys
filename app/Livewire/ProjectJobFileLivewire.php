@@ -33,8 +33,9 @@ class ProjectJobFileLivewire extends Component
         $this->project = Project::with('projectJob', 'client')->find($id);
         $this->documents = $this->project->documents->toArray();
 
-        $this->documents = array_map(function($value) {
-            $value['document_url'] = $this->serviceStorage->getSignedUrl($value['object_name']); 
+        $this->documents = array_map(function ($value) {
+            $value['document_url'] = $this->serviceStorage->getSignedUrl($value['object_name']);
+
             return $value;
         }, $this->documents);
     }
@@ -73,7 +74,7 @@ class ProjectJobFileLivewire extends Component
             $item = $firebaseStorage->upload($document)->getItem();
             $signedUrl = $item->signedUrl(now()->addMonth());
             $info = $item->info();
-            
+
             $this->project->documents()->create([
                 'document_path' => $item->name(),
                 'document_type' => $info['contentType'],
@@ -82,7 +83,7 @@ class ProjectJobFileLivewire extends Component
                 'bucket_name' => $info['bucket'],
                 'object_name' => $info['name'],
             ]);
-            Storage::delete('livewire-tmp/' . $document->getFilename());
+            Storage::delete('livewire-tmp/'.$document->getFilename());
             $this->tempDocument = null;
         }
 

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Actions\SetPropertyAddressOnAllProjects;
 use App\Livewire\Abstract\FormComponent;
 use App\Models\Client;
+use App\Models\Company;
 use App\Models\Geo\City;
 use App\Models\Geo\Country;
 use App\Models\Geo\Division;
@@ -15,6 +16,14 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 class ProjectJobFormLivewire extends FormComponent
 {
     use LivewireAlert;
+
+    public $companies;
+
+    public $companyName;
+
+    public $companyId;
+
+    public $companyKeyword;
 
     public $jobAdditionalInfo;
 
@@ -114,7 +123,7 @@ class ProjectJobFormLivewire extends FormComponent
 
     public function mount($id = null)
     {
-        $this->project = Project::with('projectJob', 'client')->find($id);
+        $this->project = Project::with('projectJob', 'client', 'company')->find($id);
         if ($this->project) {
             // Bind existing local variables to db columns
             $this->initModelData($this->project);
@@ -122,6 +131,7 @@ class ProjectJobFormLivewire extends FormComponent
             $this->clientName = $this->project->client->name;
             $this->projectId = $this->project->id;
             $this->documents = $this->project->documents;
+            $this->companyName = $this->project->company->company_name;
         }
 
         $this->country = Country::with(['divisions:id,name,country_id'])->first();
@@ -131,6 +141,7 @@ class ProjectJobFormLivewire extends FormComponent
             $this->getCityList();
         }
 
+        $this->companies = Company::query()->limit(10)->get()->toArray();
         $this->clients = Client::query()->limit(10)->get()->toArray();
         $this->propertyAddresses = Project::query()->limit(10)->get()->toArray();
     }
@@ -165,10 +176,17 @@ class ProjectJobFormLivewire extends FormComponent
         $this->cities = City::where('division_id', $stateModel->id)->get()->toArray();
     }
 
+    public function updatedCompanyKeyword($value)
+    {
+        $this->companies = Company::search($value)->get()->toArray();
+    }
+
     private function getCityList()
     {
-        $stateModel = Division::where('name', $this->project['property_state'])->first();
-        $this->cities = City::where('division_id', $stateModel->id)->orderBy('name')->get()->toArray();
+        if ($this->project['property_state']) {
+            $stateModel = Division::where('name', $this->project['property_state'])->first();
+            $this->cities = City::where('division_id', $stateModel->id)->orderBy('name')->get()->toArray();
+        }
     }
 
     public function selectBind($values)
@@ -192,7 +210,6 @@ class ProjectJobFormLivewire extends FormComponent
         ]);
 
         // Project Update
-
         $project = Project::with('projectJob')->find($this->projectId);
         $project->client_id = $this->clientId;
         $project->project_number = $this->projectNumber;
@@ -212,6 +229,7 @@ class ProjectJobFormLivewire extends FormComponent
         $project->commercial_job_price = $this->commercialJobPrice;
         $project->task_total = $this->taskTotal;
         $project->rfi_messages = $this->rfiMessages;
+        $project->company_id = $this->companyId;
         $project->save();
 
         // Job Update

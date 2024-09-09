@@ -22,7 +22,16 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <x-select-options-component :lists='$companies' keyword='companyKeyword' idKey='id'
+                            labelKey='company_name' inputId='companyId' :inputName='$companyName' :livewireId='$this->__id'>
+                            <x-slot:label>Company</x-slot:label>
+                        </x-select-options-component>
+                        @error('companyId')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-4">
                         <x-select-options-component :lists='$clients' keyword='clientKeyword' idKey='id'
                             labelKey='name' inputId='clientId' :inputName='$clientName' :livewireId='$this->__id'>
                             <x-slot:label>Client</x-slot:label>
@@ -31,7 +40,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Project Number</label>
                             <input type="text" class="form-control" wire:model='projectNumber'>
@@ -342,7 +351,9 @@
             @this.dispatch('related-job-table', {
                 'projectId': '{{ $projectId }}',
                 'propertyAddress': `{{ $propertyAddress }}`
-            })
+            });
+
+            
         });
     </script>
 @endpush
