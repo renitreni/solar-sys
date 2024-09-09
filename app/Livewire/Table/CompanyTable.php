@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Table;
 
-use App\Models\Client;
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
@@ -13,16 +13,14 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class ClientTable extends PowerGridComponent
+final class CompanyTable extends PowerGridComponent
 {
     use WithExport;
     
-    public string $tableName = 'ClientTable';
+    public string $tableName = 'CompanyTable';
 
     public function setUp(): array
     {
-        // $this->showCheckBox();
-
         return [
             Header::make()->showSearchInput(),
             Footer::make()
@@ -31,19 +29,9 @@ final class ClientTable extends PowerGridComponent
         ];
     }
 
-    public function header(): array
-    {
-        return [
-            Button::add('add-new')
-                ->slot('<i class="fas fa-plus"></i> Add Client')
-                ->class('btn btn-sm btn-success')
-                ->dispatch('client-add', []),
-        ];
-    }
-
     public function datasource(): Builder
     {
-        return Client::query();
+        return Company::query();
     }
 
     public function relationSearch(): array
@@ -55,35 +43,22 @@ final class ClientTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('name')
-            ->add('email')
-            ->add('address')
-            ->add('contact_no')
+            ->add('company_name')
             ->add('created_at');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id')->hidden(),
+            Column::make('Id', 'id'),
+            Column::make('Company name', 'company_name')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('Created at', 'created_at_formatted', 'created_at')
+                ->sortable(),
 
             Column::make('Created at', 'created_at')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Name', 'name')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Email', 'email')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Address', 'address')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Contact no', 'contact_no')
                 ->sortable()
                 ->searchable(),
 
@@ -100,11 +75,11 @@ final class ClientTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->dispatch('client-edit', $rowId);
-        $this->js('$("#clientFormModal").modal("show")');
+        $this->dispatch('company-edit', $rowId);
+        $this->js('$("#companyFormModal").modal("show")');
     }
 
-    public function actions(Client $row): array
+    public function actions(Company $row): array
     {
         return [
             Button::add('edit')

@@ -45,6 +45,7 @@
 
                 <x-sidebar-link-collapsable-component prefix="/reference" :sub="[
                    'Clients' => 'clients',
+                   'Companies' => 'companies',
                    'Services' => 'service',
                    'Job Status' => 'job-status',
                 ]">

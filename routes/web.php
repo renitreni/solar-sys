@@ -4,6 +4,7 @@ use App\Http\Controllers\Actions\GetClientSelect;
 use App\Http\Controllers\Actions\GetCompanyLogo;
 use App\Http\Controllers\Actions\GetImage;
 use App\Http\Controllers\LogoutController;
+use App\Livewire\CompaniesLivewire;
 use App\Livewire\CompanyLogoLivewire;
 use App\Livewire\CustomerLivewire;
 use App\Livewire\DashboardLivewire;
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     Route::prefix('reference')->group(function () {
         Route::get('/clients', CustomerLivewire::class)->name('clients');
+        Route::get('/companies', CompaniesLivewire::class)->name('companies');
         Route::get('/service', ServiceLivewire::class)->name('service');
         Route::get('/job-status', JobStatusLivewire::class)->name('job-status');
     });

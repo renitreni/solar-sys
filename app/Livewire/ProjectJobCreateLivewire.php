@@ -148,6 +148,11 @@ class ProjectJobCreateLivewire extends Component
         }
     }
 
+    public function updated($property, $value)
+    {
+        $this->$property = trim($value);
+    }
+
     private function clientIdChanged($key, $value)
     {
         if ($key != 'clientId') {

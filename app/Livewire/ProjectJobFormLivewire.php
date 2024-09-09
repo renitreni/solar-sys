@@ -151,8 +151,9 @@ class ProjectJobFormLivewire extends FormComponent
         return view('livewire.project-job-form-livewire');
     }
 
-    public function updated($property)
+    public function updated($property, $value)
     {
+        $this->$property = trim($value);
         if ($property == 'project.property_state') {
             $this->getCityList();
             $this->project['property_city'] = null;
