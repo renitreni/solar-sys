@@ -247,7 +247,6 @@ class ProjectJobFormLivewire extends FormComponent
         $job->date_received_formula = $this->dateReceivedFormula;
         $job->date_due = $this->dateDue;
         $job->date_completed = $this->dateCompleted;
-        $job->date_cancelled = $this->dateCancelled;
         $job->date_sent = $this->dateSent;
         $job->client_name = $this->clientName;
         $job->client_email = $this->clientEmail;

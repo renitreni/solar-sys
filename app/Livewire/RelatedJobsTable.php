@@ -42,7 +42,12 @@ final class RelatedJobsTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Project::query()->with('client')->where('property_address', $this->propertyAddress)->whereNot('id', $this->projectId);
+        return Project::query()
+            ->selectRaw('projects.*')
+            ->with('client', 'projectJob')
+            ->leftJoin('project_jobs', 'project_jobs.project_id', '=', 'projects.id')
+            ->where('projects.property_address', $this->propertyAddress)
+            ->whereNot('projects.id', $this->projectId);
     }
 
     public function relationSearch(): array
@@ -51,6 +56,10 @@ final class RelatedJobsTable extends PowerGridComponent
             'client' => [
                 'name',
             ],
+            'projectJob' => [
+                'job_status',
+                'additional_info'
+            ],
         ];
     }
 
@@ -58,6 +67,8 @@ final class RelatedJobsTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
+            ->add('projectJob.job_status')
+            ->add('projectJob.additional_info')
             ->add('client.name')
             ->add('project_number')
             ->add('property_type')
@@ -70,9 +81,7 @@ final class RelatedJobsTable extends PowerGridComponent
             ->add('wet_stamp_count')
             ->add('shipping_number')
             ->add('priority_level')
-            ->add('task_price_total')
             ->add('commercial_job_price')
-            ->add('task_total')
             ->add('rfi_messages')
             ->add('created_at');
     }
@@ -81,31 +90,25 @@ final class RelatedJobsTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id')->hidden(),
-            Column::make('Client Name', 'client.name'),
+            Column::make('Job Status', 'projectJob.job_status', 'project_jobs.job_status')
+                ->sortable(),
+            Column::make('Client Name', 'client.name')
+                ->searchable(),
             Column::make('Project number', 'project_number')
                 ->sortable()
                 ->searchable(),
-
             Column::make('Property type', 'property_type')
                 ->sortable()
                 ->searchable(),
-
             Column::make('Property owner name', 'property_owner_name')
                 ->sortable()
                 ->searchable(),
-
             Column::make('Property address', 'property_address')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('Task price total', 'task_price_total')
+            Column::make('Additional Info', 'projectJob.additional_info', 'project_job.additional_info')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('Task total', 'task_total')
-                ->sortable()
-                ->searchable(),
-
             Column::make('Created at', 'created_at')
                 ->sortable()
                 ->searchable(),
@@ -114,8 +117,7 @@ final class RelatedJobsTable extends PowerGridComponent
 
     public function filters(): array
     {
-        return [
-        ];
+        return [];
     }
 
     #[\Livewire\Attributes\On('edit')]

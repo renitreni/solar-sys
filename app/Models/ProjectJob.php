@@ -25,7 +25,6 @@ class ProjectJob extends Model
         'date_received_formula',
         'date_due',
         'date_completed',
-        'date_cancelled',
         'date_sent', // Sent to Client
         'client_name',
         'client_email',

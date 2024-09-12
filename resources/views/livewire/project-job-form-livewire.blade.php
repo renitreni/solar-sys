@@ -15,7 +15,7 @@
     </x-slot:actionButtons>
 
     <div class="accordion">
-        {{-- ---------------------------- --}}
+        {{-- ---------------------------- Projects --}}
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Project</div>
@@ -125,6 +125,7 @@
                             <input type="text" class="form-control" wire:model='wetStampMailingAddress'>
                         </div>
                     </div>
+                    <div class="col-md-8"></div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Number of Wet Stamps</label>
@@ -134,7 +135,7 @@
                 </div>
             </div>
         </div>
-        {{-- ---------------------------- --}}
+        {{-- ---------------------------- Related Jobs --}}
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Related Jobs</div>
@@ -143,7 +144,7 @@
                 <livewire:components.related-job-livewire-components></livewire:components.related-job-livewire-components>
             </div>
         </div>
-        {{-- ---------------------------- --}}
+        {{-- ---------------------------- JOB --}}
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Job</div>
@@ -215,13 +216,6 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group" wire:ignore>
-                            <label>Date Cancelled</label>
-                            <input type="text" class="form-control date-control" wire:model='dateCancelled'
-                                readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group" wire:ignore>
                             <label>Date Sent to Client</label>
                             <input type="text" class="form-control date-control" wire:model='dateSent' readonly>
                         </div>
@@ -260,7 +254,33 @@
                 </div>
             </div>
         </div>
-        {{-- ---------------------------- --}}
+        {{-- ---------------------------- RFI --}}
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">RFI (Request for Information)</div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" wire:ignore>
+                            <label>Enter your request</label>
+                            <!-- Create the editor container -->
+                            <div id="rfi-editor" style="height:180px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- ---------------------------- Tracking Numbers --}}
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Tracking Numbers</div>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+        {{-- ---------------------------- Tasks --}}
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Tasks</div>
@@ -283,32 +303,6 @@
                         <input type="number" class="form-control" wire:model='taskTotal'>
                     </div>
                 </div>
-            </div>
-        </div>
-        {{-- ---------------------------- --}}
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">RFI (Request for Information)</div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group" wire:ignore>
-                            <label>Enter your request</label>
-                            <!-- Create the editor container -->
-                            <div id="rfi-editor" style="height:180px"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- ---------------------------- --}}
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Tracking Numbers</div>
-            </div>
-            <div class="card-body">
-
             </div>
         </div>
     </div>

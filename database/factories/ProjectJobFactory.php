@@ -29,7 +29,6 @@ class ProjectJobFactory extends Factory
             'date_received_formula' => fake()->dateTime(),
             'date_due' => fake()->dateTime(),
             'date_completed' => fake()->dateTime(),
-            'date_cancelled' => fake()->dateTime(),
             'date_sent' => fake()->dateTime(), // Sent to Client
             'client_name' => fake()->name(),
             'client_email' => fake()->email(),

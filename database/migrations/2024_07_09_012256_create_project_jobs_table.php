@@ -26,7 +26,6 @@ return new class extends Migration
             $table->dateTime('date_received_formula')->nullable();
             $table->dateTime('date_due')->nullable();
             $table->dateTime('date_completed')->nullable();
-            $table->dateTime('date_cancelled')->nullable();
             $table->dateTime('date_sent')->nullable();
             $table->string('client_name')->nullable();
             $table->string('client_email')->nullable();
