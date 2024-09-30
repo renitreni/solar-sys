@@ -54,7 +54,7 @@
                 </x-sidebar-link-collapsable-component>
 
                 <x-sidebar-link-collapsable-component prefix="/users" :sub="[
-                    'All List' => 'user',
+                    'Accounts' => 'user',
                 ]">
                     <i class="fas fa-user"></i>
                     <p>Users</p>
