@@ -315,4 +315,9 @@ class ProjectJobFormLivewire extends FormComponent
 
         $this->flash('success', 'Stored Sucessfully!', [], route('project-job'));
     }
+
+    public function createTask()
+    {
+        $this->dispatch('create-task', ['projectId' => $this->projectId]);
+    }
 }

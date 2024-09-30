@@ -283,7 +283,13 @@
         {{-- ---------------------------- Tasks --}}
         <div class="card">
             <div class="card-header">
-                <div class="card-title">Tasks</div>
+                <div class="card-title">
+                    Tasks
+                </div>
+                <button type="button" class="btn btn-sm btn-success ms-2" wire:click='createTask'>
+                    <i class="fas fa-plus"></i>
+                    Add Task
+                </button>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -306,6 +312,8 @@
             </div>
         </div>
     </div>
+
+    <livewire:components.task-component-livewire></livewire:components.task-component-livewire>
 </x-form-view-component>
 
 @push('scripts')

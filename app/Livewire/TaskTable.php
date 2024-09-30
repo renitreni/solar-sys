@@ -93,7 +93,7 @@ final class TaskTable extends PowerGridComponent
             Button::add('edit')
                 ->slot('Edit')
                 ->id()
-                ->class('btn btn-sm btn-primary')
+                ->class('btn btn-xs btn-primary')
                 ->dispatch('edit', ['rowId' => $row->id]),
         ];
     }
