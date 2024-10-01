@@ -258,64 +258,11 @@ class ProjectJobFormLivewire extends FormComponent
         $this->alert('success', 'Updated Sucessfully!');
     }
 
-    public function store()
-    {
-        $this->validate([
-            'clientId' => 'required',
-            'propertyAddress' => 'required',
-            'projectNumber' => 'required',
-            'propertyState' => 'required',
-            'propertyCity' => 'required',
-            'propertyAreaCode' => 'required',
-        ]);
-
-        // Project Store
-        $project = new Project;
-        $project->client_id = $this->clientId;
-        $project->project_number = $this->projectNumber;
-        $project->property_type = $this->propertyType;
-        $project->property_owner_name = $this->propertyOwnerName;
-        $project->property_address = $this->propertyAddress;
-        $project->property_state = $this->propertyState;
-        $project->property_city = $this->propertyCity;
-        $project->property_area_code = $this->propertyAreaCode;
-        $project->wet_stamp_mailing_address = $this->wetStampMailingAddress;
-        $project->wet_stamp_count = $this->wetStampCount;
-        $project->shipping_number = $this->shippingNumber;
-        $project->priority_level = $this->priorityLevel;
-        $project->task_price_total = $this->taskPriceTotal;
-        $project->commercial_job_price = $this->commercialJobPrice;
-        $project->task_total = $this->taskTotal;
-        $project->rfi_messages = $this->rfiMessages;
-        $project->save();
-
-        // Job Store
-        $job = new ProjectJob;
-        $job->project_id = $project->id;
-        $job->job_name = $this->jobName;
-        $job->service_order_url = $this->serviceOrderUrl;
-        $job->request_no = $this->requestNo;
-        $job->job_no = $this->jobNo;
-        $job->service_order_form = $this->serviceOrderForm;
-        $job->job_status = $this->jobStatus;
-        $job->in_review = $this->inReview;
-        $job->estimated_completion = $this->estimatedCompletion;
-        $job->estimated_completion_override = $this->estimatedCompletionOverride;
-        $job->date_received_formula = $this->dateReceivedFormula;
-        $job->date_due = $this->dateDue;
-        $job->date_completed = $this->dateCompleted;
-        $job->date_cancelled = $this->dateCancelled;
-        $job->date_sent = $this->dateSent;
-        $job->client_name = $this->clientName;
-        $job->client_email = $this->clientEmail;
-        $job->client_email_override = $this->clientEmailOverride;
-        $job->deliverables_email = $this->deliverablesEmail;
-        $job->additional_info = $this->additionalInfo;
-        $job->save();
-
-        $this->flash('success', 'Stored Sucessfully!', [], route('project-job'));
-    }
-
+    /**
+     * This is an event call only.
+     *
+     * @return void
+     */
     public function createTask()
     {
         $this->dispatch('create-task', ['projectId' => $this->projectId]);

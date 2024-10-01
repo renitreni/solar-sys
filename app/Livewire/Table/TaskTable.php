@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Table;
 
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +17,14 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 final class TaskTable extends PowerGridComponent
 {
     use WithExport;
+
+    public string $sortField = 'service_name'; 
+
+    public string $sortDirection = 'asc';
+
+    public string $tableName = 'TaskTable';
+
+    public string $projectId;
 
     public function setUp(): array
     {
@@ -35,7 +43,10 @@ final class TaskTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Task::query()->selectRaw('tasks.*')->leftJoin('services as service', 'service.id', '=', 'tasks.service_id')->with('service');
+        return Task::query()->selectRaw('tasks.*')
+            ->leftJoin('services as service', 'service.id', '=', 'tasks.service_id')
+            ->where('project_id', $this->projectId)
+            ->with('service');
     }
 
     public function relationSearch(): array
@@ -64,7 +75,7 @@ final class TaskTable extends PowerGridComponent
             Column::make('Id', 'id')->hidden(),
             Column::make('Service Name', 'service.service_name')
                 ->sortable(),
-            Column::make('Task Price', 'service.price')
+            Column::make('Task Price', 'price')
                 ->sortable()
                 ->searchable(),
 
@@ -81,12 +92,6 @@ final class TaskTable extends PowerGridComponent
         return [];
     }
 
-    #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
-    {
-        $this->js('alert(' . $rowId . ')');
-    }
-
     public function actions(Task $row): array
     {
         return [
@@ -94,7 +99,7 @@ final class TaskTable extends PowerGridComponent
                 ->slot('Edit')
                 ->id()
                 ->class('btn btn-xs btn-primary')
-                ->dispatch('edit', ['rowId' => $row->id]),
+                ->dispatch('edit-task', [$row]),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,11 @@ class TaskFactory extends Factory
      */
     public function definition(): array
     {
+        $service = Service::query()->inRandomOrder()->first();
+
         return [
-            //
+            'service_id' => $service->id,
+            'price' => $service->price
         ];
     }
 }

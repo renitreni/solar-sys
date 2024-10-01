@@ -294,9 +294,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <livewire:task-table/>
+                        <livewire:table.task-table :projectId='$projectId'/>
                     </div>
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <label for="">Task Price Total</label>
                         <input type="number" class="form-control" wire:model='taskPriceTotal'>
                     </div>
@@ -307,7 +307,7 @@
                     <div class="col-md-4">
                         <label for="">Total</label>
                         <input type="number" class="form-control" wire:model='taskTotal'>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
