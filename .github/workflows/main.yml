@@ -26,4 +26,5 @@ jobs:
             composer install
             composer dump-autoload
             php artisan migrate:fresh --seed
+            php artisan optimize:clear
             chown -R www-data:www-data ${{ secrets.VPS_REPO_PATH }}/storage/logs
