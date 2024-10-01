@@ -19,4 +19,5 @@
             </div>
         </div>
     </div>
+    <livewire:components.project-view-livewire-component>
 </div>

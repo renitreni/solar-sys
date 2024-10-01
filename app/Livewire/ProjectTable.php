@@ -121,15 +121,14 @@ final class ProjectTable extends PowerGridComponent
         return [];
     }
 
-    #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
-    {
-        $this->js('alert('.$rowId.')');
-    }
-
     public function actions(Project $row): array
     {
         return [
+            Button::add('view')
+                ->slot('View')
+                ->id()
+                ->class('btn btn-xs btn-secondary m-1')
+                ->dispatch('project-view-modal', ['rowId' => $row->id]),
             Button::add('edit')
                 ->slot('Edit')
                 ->id()
