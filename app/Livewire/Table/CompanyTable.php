@@ -16,7 +16,7 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 final class CompanyTable extends PowerGridComponent
 {
     use WithExport;
-    
+
     public string $tableName = 'CompanyTable';
 
     public function setUp(): array

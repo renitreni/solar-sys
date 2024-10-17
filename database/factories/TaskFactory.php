@@ -21,7 +21,9 @@ class TaskFactory extends Factory
 
         return [
             'service_id' => $service->id,
-            'price' => $service->price
+            'price' => $service->price,
+            'is_new_task' => 0,
+            'is_new_task_override' => 0,
         ];
     }
 }

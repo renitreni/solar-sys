@@ -16,7 +16,7 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 final class ClientTable extends PowerGridComponent
 {
     use WithExport;
-    
+
     public string $tableName = 'ClientTable';
 
     public function setUp(): array

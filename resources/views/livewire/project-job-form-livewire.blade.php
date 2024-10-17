@@ -4,13 +4,15 @@
     </x-slot:title>
     <x-slot:actionButtons>
         <div>
-            <a href="{{ route('project-job-form.edit', ['id' => $this->projectId]) }}" type="button" class="btn btn-sm btn-sm btn-black">Cancel</a>
+            <a href="{{ route('project-job-form.edit', ['id' => $this->projectId]) }}" type="button"
+                class="btn btn-sm btn-sm btn-black">Cancel</a>
         </div>
         <div>
             <button type="button" wire:click='update' class="btn btn-sm btn-primary">Update</button>
         </div>
         <div>
-            <a href="{{ route('project-job-file', ['id' => $this->projectId ]) }}" target="_blank" class="btn btn-sm btn-primary">Project Files</a>
+            <a href="{{ route('project-job-file', ['id' => $this->projectId]) }}" target="_blank"
+                class="btn btn-sm btn-primary">Project Files</a>
         </div>
     </x-slot:actionButtons>
 
@@ -50,6 +52,12 @@
                         @enderror
                     </div>
                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Property Owner Name</label>
+                            <input type="text" class="form-control" wire:model='propertyOwnerName'>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         @if ($projectId)
                             <div class="form-group">
                                 <label>Property Address</label>
@@ -65,12 +73,6 @@
                         @error('propertyAddress')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Property Owner Name</label>
-                            <input type="text" class="form-control" wire:model='propertyOwnerName'>
-                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
@@ -191,7 +193,12 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Job Status</label>
-                            <input type="text" class="form-control" wire:model='jobStatus'>
+                            <select class="form-control form-select" wire:model='jobStatus'>
+                                <option>-- Select Option --</option>
+                                @foreach (\App\Enums\JobStatusEnum::cases() as $case)
+                                    <option value="{{ $case->value }}">{{ $case->value }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -293,14 +300,14 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <livewire:table.task-table :projectId='$projectId'/>
+                    <div class="col-md-12 mb-3">
+                        <livewire:table.task-table :projectId='$projectId' />
                     </div>
-                    {{-- <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Task Price Total</label>
                         <input type="number" class="form-control" wire:model='taskPriceTotal'>
                     </div>
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <label for="">Commercial Job Price</label>
                         <input type="number" class="form-control" wire:model='commercialJobPrice'>
                     </div>
@@ -321,7 +328,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <script>
         $(document).ready(function() {
             const quill = new Quill('#client-request-editor', {
@@ -329,7 +337,7 @@
             });
             const quill2 = new Quill('#rfi-editor', {
                 theme: 'snow'
-            });
+            })
 
             quill.on('text-change', function() {
                 let value = $('#client-request-editor > .ql-editor').html();
@@ -354,18 +362,6 @@
                 'projectId': '{{ $projectId }}',
                 'propertyAddress': `{{ $propertyAddress }}`
             });
-
-            
         });
     </script>
-@endpush
-
-@push('styles')
-    <!-- Styles -->
-    <!-- Include stylesheet -->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 @endpush

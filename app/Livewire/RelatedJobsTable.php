@@ -58,7 +58,7 @@ final class RelatedJobsTable extends PowerGridComponent
             ],
             'projectJob' => [
                 'job_status',
-                'additional_info'
+                'additional_info',
             ],
         ];
     }

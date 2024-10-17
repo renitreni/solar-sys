@@ -164,7 +164,7 @@
             @include(data_get($theme, 'toggleable.view'), ['tableName' => $tableName])
         @else
             <span @class([$contentClassField, $contentClass])>
-                <div>{!! $column->index ? $rowIndex : $content !!}</div>
+                {!! $column->index ? $rowIndex : $content !!}
             </span>
         @endif
     </td>

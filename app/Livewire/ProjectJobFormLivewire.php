@@ -10,7 +10,8 @@ use App\Models\Geo\City;
 use App\Models\Geo\Country;
 use App\Models\Geo\Division;
 use App\Models\Project;
-use App\Models\ProjectJob;
+use App\Models\Task;
+use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ProjectJobFormLivewire extends FormComponent
@@ -45,7 +46,6 @@ class ProjectJobFormLivewire extends FormComponent
 
     public $propertyAddresses;
 
-    // PROJECT
     public $clientId;
 
     public $projectNumber;
@@ -80,7 +80,6 @@ class ProjectJobFormLivewire extends FormComponent
 
     public $taskTotal;
 
-    // JOB
     public $projectId;
 
     public $jobName;
@@ -134,7 +133,8 @@ class ProjectJobFormLivewire extends FormComponent
             $this->companyName = $this->project->company->company_name;
         }
 
-        $this->country = Country::with(['divisions:id,name,country_id'])->first();
+        $this->country = Cache::remember('country-cache', 3600, fn () => Country::with(['divisions:id,name,country_id'])->first());
+
         $this->states = $this->country->divisions->sortBy('name')->toArray();
 
         if ($this->project) {
@@ -144,6 +144,12 @@ class ProjectJobFormLivewire extends FormComponent
         $this->companies = Company::query()->limit(10)->get()->toArray();
         $this->clients = Client::query()->limit(10)->get()->toArray();
         $this->propertyAddresses = Project::query()->limit(10)->get()->toArray();
+        $this->getPriceTotal();
+    }
+
+    public function getPriceTotal()
+    {
+        $this->taskPriceTotal = Task::query()->where('project_id', $this->projectId)->sum('price');
     }
 
     public function render()
@@ -185,8 +191,14 @@ class ProjectJobFormLivewire extends FormComponent
     private function getCityList()
     {
         if ($this->project['property_state']) {
-            $stateModel = Division::where('name', $this->project['property_state'])->first();
-            $this->cities = City::where('division_id', $stateModel->id)->orderBy('name')->get()->toArray();
+            $stateModel = Cache::remember(
+                'division-'.$this->project['property_state'], 3600,
+                fn () => Division::where('name', $this->project['property_state'])->first()
+            );
+            $this->cities = Cache::remember(
+                'stateModel-'.$stateModel->id, 3600,
+                fn () => City::where('division_id', $stateModel->id)->orderBy('name')->get()->toArray()
+            );
         }
     }
 

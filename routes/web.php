@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Actions\GetClientSelect;
 use App\Http\Controllers\Actions\GetCompanyLogo;
 use App\Http\Controllers\Actions\GetImage;
 use App\Http\Controllers\LogoutController;
@@ -28,8 +27,6 @@ Route::get('/get-company-logo', GetCompanyLogo::class)->name('get-company-logo')
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
     Route::get('/get-image', GetImage::class)->name('get-image');
-
-    Route::get('/get/selec2/clients', GetClientSelect::class)->name('get.client.select');
 
     Route::get('/home', DashboardLivewire::class)->name('home');
 
