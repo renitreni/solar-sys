@@ -92,7 +92,7 @@ class TaskComponentLivewire extends Component
         $this->otherDescription = $data['other_description'];
         $this->notes = $data['notes'];
         $this->price = $data['price'];
-        
+
         $this->js('$("#task-modal").modal("show")');
         $this->js("$('#task-note-editor > .ql-editor').html('".$this->notes."');");
         $this->js("$('#other-description-editor > .ql-editor').html('".$this->otherDescription."');");
@@ -148,16 +148,17 @@ class TaskComponentLivewire extends Component
     {
         $this->validate(['selectedAssignee' => ['required']]);
 
-        $hasAssigned = array_filter($this->assignees, fn($value) => $this->selectedAssignee == $value['assigned_to']);
+        $hasAssigned = array_filter($this->assignees, fn ($value) => $this->selectedAssignee == $value['assigned_to']);
         if ($hasAssigned) {
             $this->addError('selectedAssignee', 'Assignee already exists.');
+
             return false;
         }
         $user = User::find($this->selectedAssignee);
         $this->assignees[] = [
-            "task_id" => $this->taskId,
-            "assignee_name" => $user->name,
-            "assigned_to" => $user->id
+            'task_id' => $this->taskId,
+            'assignee_name' => $user->name,
+            'assigned_to' => $user->id,
         ];
         $this->selectedAssignee = '';
     }
@@ -165,7 +166,7 @@ class TaskComponentLivewire extends Component
     public function deleteAssignee($assigned_id)
     {
         TaskAsignee::query()->where('task_id', $this->taskId)->where('assigned_to', $assigned_id)->delete();
-        $hasAssigned = array_filter($this->assignees, fn($value) => $assigned_id != $value['assigned_to']);
+        $hasAssigned = array_filter($this->assignees, fn ($value) => $assigned_id != $value['assigned_to']);
         $this->assignees = $hasAssigned;
     }
 }

@@ -41,7 +41,7 @@ final class TaskTable extends PowerGridComponent
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
-           Detail::make()
+            Detail::make()
                 ->view('components.row-details')
                 ->showCollapseIcon()
                 ->params(['name' => 'Luan']),
@@ -130,7 +130,7 @@ final class TaskTable extends PowerGridComponent
             Column::make('Id', 'id')->hidden(),
             Column::make('Service Name', 'service.service_name')->sortable()->searchable(),
             Column::make('Assigned To', 'assignees_summary'),
-           // Column::make('Other Service Description', 'other_description'),
+            // Column::make('Other Service Description', 'other_description'),
             Column::make('Is New Task', 'is_new_task'),
             Column::make('Is New Task Override', 'is_new_task_override'),
             Column::make('Task Price', 'price')->sortable()->searchable(),

@@ -169,8 +169,10 @@
                     <div class="col-md-auto">
                         <div class="form-group d-flex flex-column">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault"
-                                    wire:model='inReview'>
+                                <input class="form-check-input" type="checkbox" value="1" wire:model='inReview'
+                                @if($inReview)
+                                    checked
+                                @endif>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Please check this if job is currently in-review.
                                 </label>

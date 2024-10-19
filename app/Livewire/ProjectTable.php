@@ -14,6 +14,8 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 
 final class ProjectTable extends PowerGridComponent
 {
+    public $disableAction = false;
+
     public function setUp(): array
     {
         return [
@@ -64,7 +66,7 @@ final class ProjectTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::action('Action'),
+            Column::action('Action')->hidden($this->disableAction),
 
             Column::make('Created at', 'created_at')
                 ->sortable()
@@ -108,9 +110,6 @@ final class ProjectTable extends PowerGridComponent
                 ->searchable(),
 
             Column::make('Shipping number', 'shipping_number')
-                ->sortable()
-                ->searchable(),
-            Column::make('Task total', 'task_total')
                 ->sortable()
                 ->searchable(),
         ];
